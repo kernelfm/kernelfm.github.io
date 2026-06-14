@@ -1,55 +1,184 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LostCases - Документация</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <header class="header">
-            <div class="logo-area">
-                <h1>LostCases</h1>
-                <div class="breadcrumbs"><a href="index.html">Projects</a> / LostCases</div>
+                            <li><code>rewards</code>: Список наград с указанием шансов, материалов и команд/сообщений при выбивании.</li>
+                        </ul>
+
+                        <h3>Пример файла конфигурации (cases/default.yml):</h3>
+<pre><code>display-name: "&#FF8C00&lЗолотой Кейс"
+animation: chests
+gui:
+  title: "&aКейс: %case_display_name%"
+  rows: 6
+  items:
+    - material: GRAY_STAINED_GLASS_PANE
+      name: " "
+      slots: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 44]
+    - material: TRIPWIRE_HOOK
+      name: "&aНачать открытие"
+      lore:
+        - "&7Нажмите, чтобы начать анимацию"
+        - "&7Требуется 1 ключ"
+      slots: [22]
+      action: start
+    - type: history-1
+      slots: [45]
+    - type: history-2
+      slots: [46]
+    - type: history-3
+      slots: [47]
+    - type: history-4
+      slots: [48]
+    - type: history-5
+      slots: [49]
+
+hologram:
+  enabled: true
+  y-offset: 2.2
+  lines:
+    - "&#FF8C00&lЗолотой Кейс"
+    - "&7Нажмите ЛКМ/ПКМ для открытия"
+
+rewards:
+  diamond:
+    display-name: "&bАлмаз"
+    material: DIAMOND
+    chance: 20.0
+    commands:
+      - "[command] give %username% diamond 3"
+      - "[message] &a[✓] &fВы успешно выбили &bАлмазы&f!"
+  gold:
+    display-name: "&6Золотой слиток"
+    material: GOLD_INGOT
+    chance: 50.0
+    commands:
+      - "[command] give %username% gold_ingot 5"
+      - "[broadcast] &6&lВыигрыш! &e%username% &fвыбил &6Золотые слитки &fиз золотого кейса!"
+  coal:
+    display-name: "&8Уголь"
+    material: COAL
+    chance: 30.0
+    commands:
+      - "[command] give %username% coal 10"
+      - "[message] &a[✓] &fВы выиграли &8Уголь&f!"</code></pre>
+
+                        <h3>Поддерживаемые плейсхолдеры в GUI:</h3>
+                        <ul>
+                            <li><code>%keys%</code> - Количество ключей игрока именно для этого кейса.</li>
+                            <li><code>%all_keys%</code> - Общее количество ключей игрока по всем кейсам.</li>
+                            <li><code>%case_display_name%</code> - Отображаемое имя кейса.</li>
+                            <li><code>%username%</code> - Ник игрока.</li>
+                        </ul>
+
+                        <h3>Режимы действий при выигрыше наград:</h3>
+                        <ul>
+                            <li><code>[command] &lt;команда&gt;</code> - Выполняет команду от консоли. Поддерживает плейсхолдеры.</li>
+                            <li><code>[broadcast] &lt;сообщение&gt;</code> - Отправляет сообщение всем игрокам на сервере (поддерживает HEX и цвета).</li>
+                            <li><code>[message] &lt;сообщение&gt;</code> - Отправляет личное сообщение игроку, который открыл кейс.</li>
+                        </ul>
+                    </div>
+                </section>
             </div>
-        </header>
-        <main>
-            <section class="section">
-                <h2 class="section-title">Доступные ветки</h2>
-                <div class="grid">
-                    <a href="#" class="card active">1.0 (1.21.11)</a>
-                </div>
-            </section>
-            <section class="section">
-                <h2 class="section-title">Метаданные</h2>
-                <div class="metadata-box">
-                    <div class="meta-group">
-                        <h3>Основная информация</h3>
-                        <p>Текущая версия</p>
-                        <span>1.0</span>
+
+            <!-- Вкладка: Аддоны -->
+            <div id="tab-addons" class="tab-content" style="display: none;">
+                <section class="section doc-content">
+                    <h2 class="section-title">Разработка аддонов для плагина (создание своих анимаций)</h2>
+                    <div class="metadata-box">
+                        <p>LostCases спроектирован так, что разработчики могут легко добавлять новые анимации с помощью внешних Jar-файлов (аддонов), загружаемых динамически из папки <code>addons/</code>.</p>
+                        
+                        <h3>Шаги по созданию аддона:</h3>
+                        <ol>
+                            <li>Создайте новый Java-проект с зависимостью от Spigot/Paper API и от скомпилированного Jar-файла плагина LostCases.</li>
+                            <li>Создайте главный класс аддона, который имплементирует интерфейс <code>ru.lostdev.lostCases.api.CaseAddon</code>.</li>
+                            <li>В методе <code>onLoad(LostCases plugin)</code> зарегистрируйте вашу анимацию с помощью:<br><code>plugin.getAnimationManager().registerAnimation(new MyCustomAnimation(plugin));</code></li>
+                            <li>Скомпилируйте проект в Jar-архив и поместите его в папку <code>plugins/LostCases/addons/</code>.</li>
+                        </ol>
+
+                        <h3>Описание интерфейсов API:</h3>
+                        <ul>
+                            <li><strong>CaseAddon</strong> - Точка входа для Jar-файла аддона. Содержит методы <code>onLoad(LostCases plugin)</code> и <code>onUnload()</code> для инициализации и освобождения ресурсов аддона.</li>
+                            <li><strong>CaseAnimation</strong> - Класс, представляющий тип анимации. Должен возвращать имя анимации через <code>getName()</code> (например, "chests") и возвращать сессию открытия через <code>createSession(...)</code>.</li>
+                            <li><strong>AnimationSession</strong> - Класс, управляющий конкретным открытием кейса игроком в мире. Содержит методы:
+                                <ul>
+                                    <li><code>start()</code> - Вызывается при запуске анимации. Здесь вы расставляете блоки анимации и запускаете задачи (Scheduler).</li>
+                                    <li><code>handleInteract(Player, Block, Action)</code> - Вызывается при кликах игрока по блокам во время открытого кейса. Позволяет делать выбор сундука.</li>
+                                    <li><code>stop()</code> - Вызывается при завершении или отмене сессии. Обязательно восстановите все измененные блоки, удалите голограммы и вызовите <code>plugin.getAnimationManager().endSession(player, caseBlockLoc)</code>.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <h3>Пример простейшей анимации (Java-код):</h3>
+<pre><code>package myaddon.animation;
+
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
+import org.bukkit.event.block.Action;
+import ru.lostdev.lostCases.LostCases;
+import ru.lostdev.lostCases.api.AnimationSession;
+import ru.lostdev.lostCases.api.CaseAnimation;
+import ru.lostdev.lostCases.case_system.CaseModel;
+
+public class MyCustomAnimation implements CaseAnimation {
+    private final LostCases plugin;
+
+    public MyCustomAnimation(LostCases plugin) {
+        this.plugin = plugin;
+    }
+
+    @Override
+    public String getName() {
+        return "my_custom_anim";
+    }
+
+    @Override
+    public AnimationSession createSession(Player player, Location location, CaseModel caseModel, ConfigurationSection config) {
+        return new AnimationSession() {
+            @Override
+            public void start() {
+                player.sendMessage("Анимация запущена!");
+                // Логика отображения эффектов
+            }
+
+            @Override
+            public void handleInteract(Player p, Block block, Action action) {
+                // Выбор сундука или предмета
+            }
+
+            @Override
+            public void stop() {
+                plugin.getAnimationManager().endSession(player, location);
+            }
+        };
+    }
+}</code></pre>
                     </div>
-                    <div class="meta-group">
-                        <h3>Совместимость</h3>
-                        <p>Версия Minecraft</p>
-                        <span>1.21.11</span>
-                    </div>
-                </div>
-            </section>
-            <section class="section">
-                <h2 class="section-title">Версии</h2>
-                <div class="grid versions-grid">
-                    <div class="card version-card">
-                        <span class="version-name">1.0.0</span>
-                        <span class="badge badge-stable">STABLE</span>
-                    </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </main>
         <footer class="footer">
             <div class="footer-logo">LostCases</div>
             <div class="footer-copy">© 2026<br>Документация плагина.</div>
         </footer>
     </div>
+
+    <script>
+        function openTab(tabId, btn) {
+            // Скрываем весь контент вкладок
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.style.display = 'none';
+            });
+
+            // Снимаем класс active со всех кнопок
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Показываем нужную вкладку и делаем кнопку активной
+            document.getElementById(tabId).style.display = 'block';
+            btn.classList.add('active');
+        }
+    </script>
 </body>
 </html>
