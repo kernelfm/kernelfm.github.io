@@ -24,7 +24,6 @@
                 </div>
             </section>
 
-            <!-- Вкладка: Основная информация (1.0) -->
             <div id="tab-main" class="tab-content active">
                 <section class="section">
                     <h2 class="section-title">Информация</h2>
@@ -52,139 +51,78 @@
                 </section>
             </div>
 
-            <!-- Вкладка: Конфиги -->
             <div id="tab-configs" class="tab-content" style="display: none;">
                 <section class="section doc-content">
-                    <h2 class="section-title">Настройка конфигурационных файлов (cases/*.yml)</h2>
+                    <h2 class="section-title">1. Структура конфигурации кейса (cases/*.yml) [cite: 3]</h2>
                     <div class="metadata-box">
-                        <p>Каждый кейс настраивается в отдельном YAML-файле в директории <code>cases/</code> вашего плагина.</p>
-                        <p>В конфигурации можно полностью настроить интерфейс открытия, отображение голограммы над блоком кейса, а также шансы и команды наград.</p>
-                        
-                        <h3>Параметры файла конфигурации:</h3>
+                        <p>Плагин поддерживает неограниченное число кейсов. [cite: 4] Конфигурация каждого кейса располагается в папке <code>plugins/LostCases/cases/</code> в формате YAML. [cite: 4]</p>
                         <ul>
-                            <li><code>display-name</code>: Красивое отображаемое имя кейса (поддерживает HEX-цвета и стандартные коды).</li>
-                            <li><code>animation</code>: Название анимации открытия. По умолчанию доступна анимация chests (сундуки).</li>
-                            <li><code>gui</code>: Настройка GUI-меню перед открытием кейса.</li>
-                            <li><code>hologram</code>: Настройка постоянной голограммы над физическим блоком кейса.</li>
-                            <li><code>rewards</code>: Список наград с указанием шансов, материалов и команд/сообщений при выбивании.</li>
-                        </ul>
-
-                        <h3>Пример файла конфигурации (cases/default.yml):</h3>
-<pre><code>display-name: "&#FF8C00&lЗолотой Кейс"
-animation: chests
-gui:
-  title: "&aКейс: %case_display_name%"
-  rows: 6
-  items:
-    - material: GRAY_STAINED_GLASS_PANE
-      name: " "
-      slots: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 44]
-    - material: TRIPWIRE_HOOK
-      name: "&aНачать открытие"
-      lore:
-        - "&7Нажмите, чтобы начать анимацию"
-        - "&7Требуется 1 ключ"
-      slots: [22]
-      action: start
-    - type: history-1
-      slots: [45]
-    - type: history-2
-      slots: [46]
-    - type: history-3
-      slots: [47]
-    - type: history-4
-      slots: [48]
-    - type: history-5
-      slots: [49]
-
-hologram:
-  enabled: true
-  y-offset: 2.2
-  lines:
-    - "&#FF8C00&lЗолотой Кейс"
-    - "&7Нажмите ЛКМ/ПКМ для открытия"
-
-rewards:
-  diamond:
-    display-name: "&bАлмаз"
-    material: DIAMOND
-    chance: 20.0
-    commands:
-      - "[command] give %username% diamond 3"
-      - "[message] &a[✓] &fВы успешно выбили &bАлмазы&f!"
-  gold:
-    display-name: "&6Золотой слиток"
-    material: GOLD_INGOT
-    chance: 50.0
-    commands:
-      - "[command] give %username% gold_ingot 5"
-      - "[broadcast] &6&lВыигрыш! &e%username% &fвыбил &6Золотые слитки &fиз золотого кейса!"
-  coal:
-    display-name: "&8Уголь"
-    material: COAL
-    chance: 30.0
-    commands:
-      - "[command] give %username% coal 10"
-      - "[message] &a[✓] &fВы выиграли &8Уголь&f!"</code></pre>
-
-                        <h3>Поддерживаемые плейсхолдеры в GUI:</h3>
-                        <ul>
-                            <li><code>%keys%</code> - Количество ключей игрока именно для этого кейса.</li>
-                            <li><code>%all_keys%</code> - Общее количество ключей игрока по всем кейсам.</li>
-                            <li><code>%case_display_name%</code> - Отображаемое имя кейса.</li>
-                            <li><code>%username%</code> - Ник игрока.</li>
-                        </ul>
-
-                        <h3>Режимы действий при выигрыше наград:</h3>
-                        <ul>
-                            <li><code>[command] &lt;команда&gt;</code> - Выполняет команду от консоли. Поддерживает плейсхолдеры.</li>
-                            <li><code>[broadcast] &lt;сообщение&gt;</code> - Отправляет сообщение всем игрокам на сервере (поддерживает HEX и цвета).</li>
-                            <li><code>[message] &lt;сообщение&gt;</code> - Отправляет личное сообщение игроку, который открыл кейс.</li>
+                            <li><code>display-name</code> - Отображаемое название кейса. Поддерживает форматирование HEX-цветов в виде <code>&#RRGGBB</code> [cite: 5].</li>
+                            <li><code>animation</code> - Системный идентификатор анимации (например: <code>chests</code>) [cite: 6].</li>
+                            <li><code>gui</code> - Параметры меню открытия. Настраиваются размер (<code>rows</code> от 1 до 6), заголовок и предметы в слотах [cite: 7].</li>
+                            <li><code>hologram</code> - Текст голограммы DecentHolograms над блоком кейса в мире, высота смещения (<code>y-offset</code>) и список строк [cite: 8].</li>
+                            <li><code>rewards</code> - Список наград, их шансы и действия. Действие может содержать префиксы <code>[command]</code>, <code>[broadcast]</code>, <code>[message]</code> [cite: 9].</li>
                         </ul>
                     </div>
                 </section>
             </div>
 
-            <!-- Вкладка: Аддоны -->
             <div id="tab-addons" class="tab-content" style="display: none;">
                 <section class="section doc-content">
-                    <h2 class="section-title">Разработка аддонов для плагина (создание своих анимаций)</h2>
+                    <h2 class="section-title">2. Создание аддона с новой анимацией (по шагам) [cite: 10]</h2>
                     <div class="metadata-box">
-                        <p>LostCases спроектирован так, что разработчики могут легко добавлять новые анимации с помощью внешних Jar-файлов (аддонов), загружаемых динамически из папки <code>addons/</code>.</p>
-                        
-                        <h3>Шаги по созданию аддона:</h3>
-                        <ol>
-                            <li>Создайте новый Java-проект с зависимостью от Spigot/Paper API и от скомпилированного Jar-файла плагина LostCases.</li>
-                            <li>Создайте главный класс аддона, который имплементирует интерфейс <code>ru.lostdev.lostCases.api.CaseAddon</code>.</li>
-                            <li>В методе <code>onLoad(LostCases plugin)</code> зарегистрируйте вашу анимацию с помощью:<br><code>plugin.getAnimationManager().registerAnimation(new MyCustomAnimation(plugin));</code></li>
-                            <li>Скомпилируйте проект в Jar-архив и поместите его в папку <code>plugins/LostCases/addons/</code>.</li>
-                        </ol>
+                        <p>Аддоны представляют собой обычные Java-библиотеки (Jar-файлы), которые помещаются в папку <code>plugins/LostCases/addons/</code> и динамически загружаются плагином при старте. [cite: 11] Никаких дополнительных манифестов и <code>plugin.yml</code> файлов внутри Jar аддона создавать НЕ нужно. [cite: 12] Загрузчик плагина сам сканирует все скомпилированные классы в архиве. [cite: 13]</p>
 
-                        <h3>Описание интерфейсов API:</h3>
-                        <ul>
-                            <li><strong>CaseAddon</strong> - Точка входа для Jar-файла аддона. Содержит методы <code>onLoad(LostCases plugin)</code> и <code>onUnload()</code> для инициализации и освобождения ресурсов аддона.</li>
-                            <li><strong>CaseAnimation</strong> - Класс, представляющий тип анимации. Должен возвращать имя анимации через <code>getName()</code> (например, "chests") и возвращать сессию открытия через <code>createSession(...)</code>.</li>
-                            <li><strong>AnimationSession</strong> - Класс, управляющий конкретным открытием кейса игроком в мире. Содержит методы:
-                                <ul>
-                                    <li><code>start()</code> - Вызывается при запуске анимации. Здесь вы расставляете блоки анимации и запускаете задачи (Scheduler).</li>
-                                    <li><code>handleInteract(Player, Block, Action)</code> - Вызывается при кликах игрока по блокам во время открытого кейса. Позволяет делать выбор сундука.</li>
-                                    <li><code>stop()</code> - Вызывается при завершении или отмене сессии. Обязательно восстановите все измененные блоки, удалите голограммы и вызовите <code>plugin.getAnimationManager().endSession(player, caseBlockLoc)</code>.</li>
-                                </ul>
-                            </li>
-                        </ul>
+                        <h3>Шаг 1. Настройка Maven или Gradle зависимостей [cite: 14]</h3>
+                        <p>Вам необходимо подключить в качестве зависимостей (compileOnly / provided) скомпилированный Jar плагина LostCases, Paper API вашей версии (1.21.1) и DecentHolograms API. [cite: 15]</p>
 
-                        <h3>Пример простейшей анимации (Java-код):</h3>
-<pre><code>package myaddon.animation;
+                        <h3>Шаг 2. Создание главного класса аддона [cite: 16]</h3>
+                        <p>Главный класс аддона должен реализовывать интерфейс <code>ru.lostdev.lostCases.api.CaseAddon</code>. [cite: 17] Плагин найдет его автоматически при сканировании Jar-файла. [cite: 17]</p>
+<pre><code>package ru.lostdev.myaddon;
 
+import ru.lostdev.lostCases.LostCases;
+import ru.lostdev.lostCases.api.CaseAddon;
+
+public class MyAddonMain implements CaseAddon {
+    private LostCases plugin;
+
+    @Override
+    public void onLoad(LostCases plugin) {
+        this.plugin = plugin;
+        plugin.getAnimationManager().registerAnimation(new MyCustomAnimation(plugin));
+        plugin.getLogger().info("Аддон с кастомной анимацией успешно загружен!");
+    }
+
+    @Override
+    public void onUnload() {
+        plugin.getLogger().info("Аддон выгружен.");
+    }
+} [cite: 18]</code></pre>
+
+                        <h3>Шаг 3. Имплементация анимации и сессии открытия [cite: 19]</h3>
+                        <p>Для написания анимации необходимо имплементировать интерфейс <code>CaseAnimation</code>, который будет возвращать название вашей анимации и создавать новую сессию открытия при взаимодействии игрока с кейсом. [cite: 20]</p>
+<pre><code>package ru.lostdev.myaddon;
+
+import eu.decentsoftware.holograms.api.DHAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.block.Lidded;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import ru.lostdev.lostCases.LostCases;
 import ru.lostdev.lostCases.api.AnimationSession;
 import ru.lostdev.lostCases.api.CaseAnimation;
 import ru.lostdev.lostCases.case_system.CaseModel;
+import ru.lostdev.lostCases.case_system.RewardModel;
+import ru.lostdev.lostCases.utility.ColorUtil;
+import java.util.Arrays;
+import java.util.List;
 
 public class MyCustomAnimation implements CaseAnimation {
     private final LostCases plugin;
@@ -200,25 +138,106 @@ public class MyCustomAnimation implements CaseAnimation {
 
     @Override
     public AnimationSession createSession(Player player, Location location, CaseModel caseModel, ConfigurationSection config) {
-        return new AnimationSession() {
-            @Override
-            public void start() {
-                player.sendMessage("Анимация запущена!");
-                // Логика отображения эффектов
-            }
-
-            @Override
-            public void handleInteract(Player p, Block block, Action action) {
-                // Выбор сундука или предмета
-            }
-
-            @Override
-            public void stop() {
-                plugin.getAnimationManager().endSession(player, location);
-            }
-        };
+        return new MyCustomSession(plugin, player, location, caseModel, config);
     }
-}</code></pre>
+}
+
+class MyCustomSession implements AnimationSession {
+    private final LostCases plugin;
+    private final Player player;
+    private final Location location;
+    private final CaseModel caseModel;
+    private final ConfigurationSection config;
+    private Block spawnedBlock;
+    private String holoName;
+    private BukkitTask task;
+    private boolean finished = false;
+
+    public MyCustomSession(LostCases plugin, Player player, Location location, CaseModel caseModel, ConfigurationSection config) {
+        this.plugin = plugin;
+        this.player = player;
+        this.location = location;
+        this.caseModel = caseModel;
+        this.config = config;
+    }
+
+    @Override
+    public void start() {
+        Location blockLoc = location.clone().add(0, 1, 0);
+        spawnedBlock = blockLoc.getBlock();
+        spawnedBlock.setType(Material.CHEST);
+        plugin.getAnimationManager().registerBlock(blockLoc, this);
+        location.getWorld().playSound(location, Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1.0f, 1.0f);
+        player.sendMessage("§eНажмите ЛКМ по сундуку для открытия!");
+    }
+
+    @Override
+    public void handleInteract(Player clicker, Block block, Action action) {
+        if (!clicker.getUniqueId().equals(player.getUniqueId()) || action != Action.LEFT_CLICK_BLOCK) {
+            return;
+        }
+        if (finished) {
+            return;
+        }
+        finished = true;
+        if (block.getState() instanceof Lidded lidded) {
+            lidded.open();
+        }
+        block.getWorld().playSound(block.getLocation(), Sound.BLOCK_CHEST_OPEN, 1.0f, 1.0f);
+        RewardModel reward = caseModel.getRandomReward();
+        if (reward != null) {
+            plugin.getCaseManager().addHistoryEntry(caseModel.getName(), player.getName(), reward.getDisplayName(), reward.getMaterial());
+            for (String cmd : reward.getCommands()) {
+                String formatted = cmd.replace("%username%", player.getName()).replace("%group%", reward.getId());
+                if (formatted.startsWith("[command] ")) {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), formatted.substring(10));
+                } else if (formatted.startsWith("[broadcast] ")) {
+                    Bukkit.broadcastMessage(ColorUtil.color(formatted.substring(12)));
+                } else if (formatted.startsWith("[message] ")) {
+                    player.sendMessage(ColorUtil.color(formatted.substring(10)));
+                } else {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), formatted);
+                }
+            }
+            if (Bukkit.getPluginManager().isPluginEnabled("DecentHolograms")) {
+                holoName = "myaddon_" + player.getUniqueId() + "_" + System.currentTimeMillis();
+                Location holoLoc = block.getLocation().clone().add(0.5, 1.5, 0.5);
+                List<String> lines = Arrays.asList(reward.getDisplayName().replace('&', '§'), "#ICON: " + reward.getMaterial());
+                DHAPI.createHologram(holoName, holoLoc, false, lines);
+            }
+        }
+        task = new BukkitRunnable() {
+            @Override
+            public void run() {
+                stop();
+            }
+        }.runTaskLater(plugin, 80L);
+    }
+
+    @Override
+    public void stop() {
+        finished = true;
+        if (task != null) {
+            task.cancel();
+        }
+        if (holoName != null && Bukkit.getPluginManager().isPluginEnabled("DecentHolograms")) {
+            DHAPI.removeHologram(holoName);
+        }
+        if (spawnedBlock != null) {
+            plugin.getAnimationManager().unregisterBlock(spawnedBlock.getLocation());
+            spawnedBlock.setType(Material.AIR);
+        }
+        plugin.getAnimationManager().endSession(player, location);
+    }
+} [cite: 21]</code></pre>
+
+                        <h3>Шаг 4. Компиляция и развертывание аддона [cite: 22]</h3>
+                        <ul>
+                            <li>Скомпилируйте ваш проект Java в Jar-архив с помощью Maven (<code>mvn clean package</code>) или Gradle (<code>shadowJar / build</code>) [cite: 23].</li>
+                            <li>Поместите полученную библиотеку Jar в каталог <code>plugins/LostCases/addons/</code> вашего сервера [cite: 24].</li>
+                            <li>Укажите в конфигурации <code>cases/</code> имя вашей анимации: <code>animation: my_custom_anim</code> [cite: 25].</li>
+                            <li>Введите команду <code>/lostcases reload</code> от имени администратора сервера [cite: 26]. Загрузчик плагина полностью обновит зависимости и зарегистрирует вашу анимацию без перезапуска всего сервера [cite: 26].</li>
+                        </ul>
                     </div>
                 </section>
             </div>
@@ -231,19 +250,16 @@ public class MyCustomAnimation implements CaseAnimation {
 
     <script>
         function openTab(tabId, btn) {
-            // Скрываем весь контент вкладок
             const contents = document.querySelectorAll('.tab-content');
             contents.forEach(content => {
                 content.style.display = 'none';
             });
 
-            // Снимаем класс active со всех кнопок
             const buttons = document.querySelectorAll('.tab-btn');
             buttons.forEach(button => {
                 button.classList.remove('active');
             });
 
-            // Показываем нужную вкладку и делаем кнопку активной
             document.getElementById(tabId).style.display = 'block';
             btn.classList.add('active');
         }
