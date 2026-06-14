@@ -1,43 +1,87 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Документация</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LostCases - Документация</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Документация плагинов</h1>
-    </header>
-
-    <main>
-        <aside>
-            <h2>Список плагинов</h2>
-            <ul>
-                <li><a href="#lostcases">LostCases</a></li>
-            </ul>
-        </aside>
-
-        <section id="lostcases">
-            <h2>LostCases</h2>
-            <p>Плагин для управления утерянными кейсами и автоматического контроля их статуса.</p>
-
-            <h3>Установка</h3>
-            <p>Поместите файл плагина в директорию <code>/plugins</code> и перезапустите сервер.</p>
-
-            <h3>Конфигурация</h3>
-            <p>Настройки находятся в файле <code>config.yml</code>. Основные параметры:</p>
-            <ul>
-                <li><code>check-interval</code>: интервал проверки в секундах</li>
-                <li><code>auto-save</code>: автоматическое сохранение данных</li>
-            </ul>
-
-            <h3>Команды</h3>
-            <ul>
-                <li><code>/lc help</code> — показать список доступных команд</li>
-                <li><code>/lc reload</code> — перезагрузить конфигурацию плагина</li>
-                <li><code>/lc status</code> — проверить текущее состояние работы</li>
-            </ul>
-        </section>
-    </main>
+<div class="container">
+<header class="header">
+<div class="logo-area">
+<h1>LostCases</h1>
+<div class="breadcrumbs">Проекты / LostCases / 2.0</div>
+</div>
+<a href="#" class="login-link">Войти</a>
+</header>
+<main>
+<section class="section">
+<h2 class="section-title">Ветки</h2>
+<div class="grid">
+<a href="#" class="card active">2.0</a>
+<a href="#" class="card">1.5</a>
+<a href="#" class="card">1.4</a>
+<a href="#" class="card">1.0</a>
+</div>
+</section>
+<section class="section">
+<h2 class="section-title">Метаданные</h2>
+<div class="metadata-box">
+<div class="meta-group">
+<h3>Основное</h3>
+<p>ID ветки</p>
+<span>2.0</span>
+</div>
+<div class="meta-group">
+<h3>Требования</h3>
+<p>Минимальная версия Java</p>
+<span>17</span>
+</div>
+<div class="meta-group">
+<h3>Конфигурация (config.yml)</h3>
+<div class="code-container">
+<pre>check-interval: 300
+auto-save: true
+lang: "ru_RU"</pre>
+</div>
+</div>
+</div>
+</section>
+<section class="section">
+<h2 class="section-title">Версии</h2>
+<div class="grid versions-grid">
+<div class="card version-card">
+<span class="version-name">2.0.2</span>
+<span class="badge badge-stable">STABLE</span>
+</div>
+<div class="card version-card">
+<span class="version-name">2.0.2-rc1</span>
+<span class="badge badge-experimental">EXPERIMENTAL</span>
+</div>
+<div class="card version-card">
+<span class="version-name">2.0.1</span>
+<span class="badge badge-stable">STABLE</span>
+</div>
+<div class="card version-card">
+<span class="version-name">2.0.0</span>
+<span class="badge badge-unsupported">UNSUPPORTED</span>
+</div>
+<div class="card version-card">
+<span class="version-name">2.0.0-pre2</span>
+<span class="badge badge-unsupported">UNSUPPORTED</span>
+</div>
+<div class="card version-card">
+<span class="version-name">2.0.0-pre1</span>
+<span class="badge badge-unsupported">UNSUPPORTED</span>
+</div>
+</div>
+</section>
+</main>
+<footer class="footer">
+<div class="footer-logo">LostCases Plugin</div>
+<div class="footer-copy">© 2026 Разработчик плагина<br>Не является официальным продуктом.</div>
+</footer>
+</div>
 </body>
 </html>
