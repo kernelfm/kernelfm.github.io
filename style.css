@@ -58,7 +58,7 @@ body {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1rem;
 }
 
@@ -76,7 +76,13 @@ body {
     transition: all 0.2s ease;
 }
 
-a.card:hover {
+button.card {
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+}
+
+.card:hover {
     border-color: #9ca3af;
     background-color: #f9fafb;
 }
@@ -85,22 +91,6 @@ a.card:hover {
     border-color: #111827;
     background-color: #f9fafb;
     font-weight: 500;
-}
-
-.project-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.project-name {
-    font-weight: 600;
-    font-size: 1.1rem;
-}
-
-.project-desc {
-    font-size: 0.85rem;
-    color: #6b7280;
-    margin-top: 0.25rem;
 }
 
 .metadata-box {
@@ -168,4 +158,60 @@ a.card:hover {
 
 .footer-copy {
     text-align: right;
+}
+
+/* Стили для текстовой документации */
+.doc-content h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 2rem 0 1rem;
+    color: #111827;
+}
+
+.doc-content h3:first-child {
+    margin-top: 0;
+}
+
+.doc-content p {
+    margin-bottom: 1rem;
+    color: #374151;
+    font-size: 0.95rem;
+}
+
+.doc-content ul, .doc-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    color: #374151;
+    font-size: 0.95rem;
+}
+
+.doc-content li {
+    margin-bottom: 0.5rem;
+}
+
+.doc-content code {
+    background-color: #f3f4f6;
+    padding: 0.15rem 0.4rem;
+    border-radius: 0.25rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.85em;
+    color: #1f2937;
+}
+
+.doc-content pre {
+    background-color: #111827;
+    color: #f8fafc;
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-bottom: 2rem;
+    border: 1px solid #374151;
+}
+
+.doc-content pre code {
+    background-color: transparent;
+    padding: 0;
+    color: inherit;
+    font-size: 0.85em;
+    border-radius: 0;
 }
