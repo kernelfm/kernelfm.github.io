@@ -53,15 +53,91 @@
 
             <div id="tab-configs" class="tab-content" style="display: none;">
                 <section class="section doc-content">
-                    <h2 class="section-title">1. Структура конфигурации кейса (cases/*.yml) [cite: 3]</h2>
+                    <h2 class="section-title">Настройка конфигурационных файлов (cases/*.yml)</h2>
                     <div class="metadata-box">
-                        <p>Плагин поддерживает неограниченное число кейсов. [cite: 4] Конфигурация каждого кейса располагается в папке <code>plugins/LostCases/cases/</code> в формате YAML. [cite: 4]</p>
+                        <p>Каждый кейс настраивается в отдельном YAML-файле в директории <code>cases/</code> вашего плагина.</p>
+                        <p>В конфигурации можно полностью настроить интерфейс открытия, отображение голограммы над блоком кейса, а также шансы и команды наград.</p>
+                        
+                        <h3>Параметры файла конфигурации:</h3>
                         <ul>
-                            <li><code>display-name</code> - Отображаемое название кейса. Поддерживает форматирование HEX-цветов в виде <code>&#RRGGBB</code> [cite: 5].</li>
-                            <li><code>animation</code> - Системный идентификатор анимации (например: <code>chests</code>) [cite: 6].</li>
-                            <li><code>gui</code> - Параметры меню открытия. Настраиваются размер (<code>rows</code> от 1 до 6), заголовок и предметы в слотах [cite: 7].</li>
-                            <li><code>hologram</code> - Текст голограммы DecentHolograms над блоком кейса в мире, высота смещения (<code>y-offset</code>) и список строк [cite: 8].</li>
-                            <li><code>rewards</code> - Список наград, их шансы и действия. Действие может содержать префиксы <code>[command]</code>, <code>[broadcast]</code>, <code>[message]</code> [cite: 9].</li>
+                            <li><code>display-name</code>: Красивое отображаемое имя кейса (поддерживает HEX-цвета и стандартные коды).</li>
+                            <li><code>animation</code>: Название анимации открытия. По умолчанию доступна анимация chests (сундуки).</li>
+                            <li><code>gui</code>: Настройка GUI-меню перед открытием кейса.</li>
+                            <li><code>hologram</code>: Настройка постоянной голограммы над физическим блоком кейса.</li>
+                            <li><code>rewards</code>: Список наград с указанием шансов, материалов и команд/сообщений при выбивании.</li>
+                        </ul>
+
+                        <h3>Пример файла конфигурации (cases/default.yml):</h3>
+<pre><code>display-name: "&#FF8C00&lЗолотой Кейс"
+animation: chests
+gui:
+  title: "&aКейс: %case_display_name%"
+  rows: 6
+  items:
+    - material: GRAY_STAINED_GLASS_PANE
+      name: " "
+      slots: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 44]
+    - material: TRIPWIRE_HOOK
+      name: "&aНачать открытие"
+      lore:
+        - "&7Нажмите, чтобы начать анимацию"
+        - "&7Требуется 1 ключ"
+      slots: [22]
+      action: start
+    - type: history-1
+      slots: [45]
+    - type: history-2
+      slots: [46]
+    - type: history-3
+      slots: [47]
+    - type: history-4
+      slots: [48]
+    - type: history-5
+      slots: [49]
+
+hologram:
+  enabled: true
+  y-offset: 2.2
+  lines:
+    - "&#FF8C00&lЗолотой Кейс"
+    - "&7Нажмите ЛКМ/ПКМ для открытия"
+
+rewards:
+  diamond:
+    display-name: "&bАлмаз"
+    material: DIAMOND
+    chance: 20.0
+    commands:
+      - "[command] give %username% diamond 3"
+      - "[message] &a[✓] &fВы успешно выбили &bАлмазы&f!"
+  gold:
+    display-name: "&6Золотой слиток"
+    material: GOLD_INGOT
+    chance: 50.0
+    commands:
+      - "[command] give %username% gold_ingot 5"
+      - "[broadcast] &6&lВыигрыш! &e%username% &fвыбил &6Золотые слитки &fиз золотого кейса!"
+  coal:
+    display-name: "&8Уголь"
+    material: COAL
+    chance: 30.0
+    commands:
+      - "[command] give %username% coal 10"
+      - "[message] &a[✓] &fВы выиграли &8Уголь&f!"</code></pre>
+
+                        <h3>Поддерживаемые плейсхолдеры в GUI:</h3>
+                        <ul>
+                            <li><code>%keys%</code> - Количество ключей игрока именно для этого кейса.</li>
+                            <li><code>%all_keys%</code> - Общее количество ключей игрока по всем кейсам.</li>
+                            <li><code>%case_display_name%</code> - Отображаемое имя кейса.</li>
+                            <li><code>%username%</code> - Ник игрока.</li>
+                        </ul>
+
+                        <h3>Режимы действий при выигрыше наград:</h3>
+                        <ul>
+                            <li><code>[command] &lt;команда&gt;</code> - Выполняет команду от консоли. Поддерживает плейсхолдеры.</li>
+                            <li><code>[broadcast] &lt;сообщение&gt;</code> - Отправляет сообщение всем игрокам на сервере (поддерживает HEX и цвета).</li>
+                            <li><code>[message] &lt;сообщение&gt;</code> - Отправляет личное сообщение игроку, который открыл кейс.</li>
                         </ul>
                     </div>
                 </section>
@@ -69,15 +145,15 @@
 
             <div id="tab-addons" class="tab-content" style="display: none;">
                 <section class="section doc-content">
-                    <h2 class="section-title">2. Создание аддона с новой анимацией (по шагам) [cite: 10]</h2>
+                    <h2 class="section-title">Создание аддона с новой анимацией (по шагам)</h2>
                     <div class="metadata-box">
-                        <p>Аддоны представляют собой обычные Java-библиотеки (Jar-файлы), которые помещаются в папку <code>plugins/LostCases/addons/</code> и динамически загружаются плагином при старте. [cite: 11] Никаких дополнительных манифестов и <code>plugin.yml</code> файлов внутри Jar аддона создавать НЕ нужно. [cite: 12] Загрузчик плагина сам сканирует все скомпилированные классы в архиве. [cite: 13]</p>
+                        <p>Аддоны представляют собой обычные Java-библиотеки (Jar-файлы), которые помещаются в папку <code>plugins/LostCases/addons/</code> и динамически загружаются плагином при старте. Никаких дополнительных манифестов и <code>plugin.yml</code> файлов внутри Jar аддона создавать НЕ нужно. Загрузчик плагина сам сканирует все скомпилированные классы в архиве.</p>
 
-                        <h3>Шаг 1. Настройка Maven или Gradle зависимостей [cite: 14]</h3>
-                        <p>Вам необходимо подключить в качестве зависимостей (compileOnly / provided) скомпилированный Jar плагина LostCases, Paper API вашей версии (1.21.1) и DecentHolograms API. [cite: 15]</p>
+                        <h3>Шаг 1. Настройка Maven или Gradle зависимостей</h3>
+                        <p>Вам необходимо подключить в качестве зависимостей (compileOnly / provided) скомпилированный Jar плагина LostCases, Paper API вашей версии (1.21.1) и DecentHolograms API.</p>
 
-                        <h3>Шаг 2. Создание главного класса аддона [cite: 16]</h3>
-                        <p>Главный класс аддона должен реализовывать интерфейс <code>ru.lostdev.lostCases.api.CaseAddon</code>. [cite: 17] Плагин найдет его автоматически при сканировании Jar-файла. [cite: 17]</p>
+                        <h3>Шаг 2. Создание главного класса аддона</h3>
+                        <p>Главный класс аддона должен реализовывать интерфейс <code>ru.lostdev.lostCases.api.CaseAddon</code>. Плагин найдет его автоматически при сканировании Jar-файла.</p>
 <pre><code>package ru.lostdev.myaddon;
 
 import ru.lostdev.lostCases.LostCases;
@@ -97,10 +173,10 @@ public class MyAddonMain implements CaseAddon {
     public void onUnload() {
         plugin.getLogger().info("Аддон выгружен.");
     }
-} [cite: 18]</code></pre>
+}</code></pre>
 
-                        <h3>Шаг 3. Имплементация анимации и сессии открытия [cite: 19]</h3>
-                        <p>Для написания анимации необходимо имплементировать интерфейс <code>CaseAnimation</code>, который будет возвращать название вашей анимации и создавать новую сессию открытия при взаимодействии игрока с кейсом. [cite: 20]</p>
+                        <h3>Шаг 3. Имплементация анимации и сессии открытия</h3>
+                        <p>Для написания анимации необходимо имплементировать интерфейс <code>CaseAnimation</code>, который будет возвращать название вашей анимации и создавать новую сессию открытия при взаимодействии игрока с кейсом.</p>
 <pre><code>package ru.lostdev.myaddon;
 
 import eu.decentsoftware.holograms.api.DHAPI;
@@ -229,14 +305,14 @@ class MyCustomSession implements AnimationSession {
         }
         plugin.getAnimationManager().endSession(player, location);
     }
-} [cite: 21]</code></pre>
+}</code></pre>
 
-                        <h3>Шаг 4. Компиляция и развертывание аддона [cite: 22]</h3>
+                        <h3>Шаг 4. Компиляция и развертывание аддона</h3>
                         <ul>
-                            <li>Скомпилируйте ваш проект Java в Jar-архив с помощью Maven (<code>mvn clean package</code>) или Gradle (<code>shadowJar / build</code>) [cite: 23].</li>
-                            <li>Поместите полученную библиотеку Jar в каталог <code>plugins/LostCases/addons/</code> вашего сервера [cite: 24].</li>
-                            <li>Укажите в конфигурации <code>cases/</code> имя вашей анимации: <code>animation: my_custom_anim</code> [cite: 25].</li>
-                            <li>Введите команду <code>/lostcases reload</code> от имени администратора сервера [cite: 26]. Загрузчик плагина полностью обновит зависимости и зарегистрирует вашу анимацию без перезапуска всего сервера [cite: 26].</li>
+                            <li>Скомпилируйте ваш проект Java в Jar-архив с помощью Maven (<code>mvn clean package</code>) или Gradle (<code>shadowJar / build</code>).</li>
+                            <li>Поместите полученную библиотеку Jar в каталог <code>plugins/LostCases/addons/</code> вашего сервера.</li>
+                            <li>Укажите в конфигурации <code>cases/</code> имя вашей анимации: <code>animation: my_custom_anim</code>.</li>
+                            <li>Введите команду <code>/lostcases reload</code> от имени администратора сервера. Загрузчик плагина полностью обновит зависимости и зарегистрирует вашу анимацию без перезапуска всего сервера.</li>
                         </ul>
                     </div>
                 </section>
