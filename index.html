@@ -2,9 +2,42 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Тест</title>
+    <title>Документация</title>
 </head>
 <body>
-    тест123
+    <header>
+        <h1>Документация плагинов</h1>
+    </header>
+
+    <main>
+        <aside>
+            <h2>Список плагинов</h2>
+            <ul>
+                <li><a href="#lostcases">LostCases</a></li>
+            </ul>
+        </aside>
+
+        <section id="lostcases">
+            <h2>LostCases</h2>
+            <p>Плагин для управления утерянными кейсами и автоматического контроля их статуса.</p>
+
+            <h3>Установка</h3>
+            <p>Поместите файл плагина в директорию <code>/plugins</code> и перезапустите сервер.</p>
+
+            <h3>Конфигурация</h3>
+            <p>Настройки находятся в файле <code>config.yml</code>. Основные параметры:</p>
+            <ul>
+                <li><code>check-interval</code>: интервал проверки в секундах</li>
+                <li><code>auto-save</code>: автоматическое сохранение данных</li>
+            </ul>
+
+            <h3>Команды</h3>
+            <ul>
+                <li><code>/lc help</code> — показать список доступных команд</li>
+                <li><code>/lc reload</code> — перезагрузить конфигурацию плагина</li>
+                <li><code>/lc status</code> — проверить текущее состояние работы</li>
+            </ul>
+        </section>
+    </main>
 </body>
 </html>
