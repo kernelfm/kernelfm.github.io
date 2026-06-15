@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LostCases - Документация</title>
+    <title>LostCases - Documentation</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,24 +13,31 @@
                 <h1>LostCases</h1>
                 <div class="breadcrumbs"><a href="https://kernelfm.github.io/">LostCases</a></div>
             </div>
+            <div class="lang-switcher">
+                <button class="lang-btn active" id="btn-ru" onclick="setLang('ru')">RU</button>
+                <span>/</span>
+                <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+            </div>
         </header>
         <main>
-            <section class="section doc-content">
-                <h2 class="section-title">Настройка конфигурационных файлов (cases/*.yml)</h2>
-                <div class="metadata-box">
-                    <p>Каждый кейс настраивается в отдельном YAML-файле в директории <code>cases/</code> вашего плагина.</p>
-                    <p>В конфигурации можно полностью настроить интерфейс открытия, отображение голограммы над блоком кейса, а также шансы и команды наград.</p>
-                    
-                    <h3>Параметры файла конфигурации:</h3>
-                    <ul>
-                        <li><code>display-name</code>: Красивое отображаемое имя кейса (поддерживает HEX-цвета и стандартные коды).</li>
-                        <li><code>animation</code>: Название анимации открытия. По умолчанию доступна анимация chests (сундуки).</li>
-                        <li><code>gui</code>: Настройка GUI-меню перед открытием кейса.</li>
-                        <li><code>hologram</code>: Настройка постоянной голограммы над физическим блоком кейса.</li>
-                        <li><code>rewards</code>: Список наград с указанием шансов, материалов и команд/сообщений при выбивании.</li>
-                    </ul>
+            <!-- RU CONTENT -->
+            <div id="content-ru">
+                <section class="section doc-content">
+                    <h2 class="section-title">Настройка конфигурационных файлов (cases/*.yml)</h2>
+                    <div class="metadata-box">
+                        <p>Каждый кейс настраивается в отдельном YAML-файле в директории <code>cases/</code> вашего плагина.</p>
+                        <p>В конфигурации можно полностью настроить интерфейс открытия, отображение голограммы над блоком кейса, а также шансы и команды наград.</p>
+                        
+                        <h3>Параметры файла конфигурации:</h3>
+                        <ul>
+                            <li><code>display-name</code>: Красивое отображаемое имя кейса (поддерживает HEX-цвета и стандартные коды).</li>
+                            <li><code>animation</code>: Название анимации открытия. По умолчанию доступна анимация chests (сундуки).</li>
+                            <li><code>gui</code>: Настройка GUI-меню перед открытием кейса.</li>
+                            <li><code>hologram</code>: Настройка постоянной голограммы над физическим блоком кейса.</li>
+                            <li><code>rewards</code>: Список наград с указанием шансов, материалов и команд/сообщений при выбивании.</li>
+                        </ul>
 
-                    <h3>Пример файла конфигурации (cases/default.yml):</h3>
+                        <h3>Пример файла конфигурации (cases/default.yml):</h3>
 <pre><code>display-name: "&#FF8C00&lЗолотой Кейс"
 animation: chests
 gui:
@@ -88,27 +95,142 @@ rewards:
       - "[command] give %username% coal 10"
       - "[message] &a[✓] &fВы выиграли &8Уголь&f!"</code></pre>
 
-                    <h3>Поддерживаемые плейсхолдеры в GUI:</h3>
-                    <ul>
-                        <li><code>%keys%</code> - Количество ключей игрока именно для этого кейса.</li>
-                        <li><code>%all_keys%</code> - Общее количество ключей игрока по всем кейсам.</li>
-                        <li><code>%case_display_name%</code> - Отображаемое имя кейса.</li>
-                        <li><code>%username%</code> - Ник игрока.</li>
-                    </ul>
+                        <h3>Поддерживаемые плейсхолдеры в GUI:</h3>
+                        <ul>
+                            <li><code>%keys%</code> - Количество ключей игрока именно для этого кейса.</li>
+                            <li><code>%all_keys%</code> - Общее количество ключей игрока по всем кейсам.</li>
+                            <li><code>%case_display_name%</code> - Отображаемое имя кейса.</li>
+                            <li><code>%username%</code> - Ник игрока.</li>
+                        </ul>
 
-                    <h3>Режимы действий при выигрыше наград:</h3>
-                    <ul>
-                        <li><code>[command] &lt;команда&gt;</code> - Выполняет команду от консоли. Поддерживает плейсхолдеры.</li>
-                        <li><code>[broadcast] &lt;сообщение&gt;</code> - Отправляет сообщение всем игрокам на сервере (поддерживает HEX и цвета).</li>
-                        <li><code>[message] &lt;сообщение&gt;</code> - Отправляет личное сообщение игроку, который открыл кейс.</li>
-                    </ul>
-                </div>
-            </section>
+                        <h3>Режимы действий при выигрыше наград:</h3>
+                        <ul>
+                            <li><code>[command] &lt;команда&gt;</code> - Выполняет команду от консоли. Поддерживает плейсхолдеры.</li>
+                            <li><code>[broadcast] &lt;сообщение&gt;</code> - Отправляет сообщение всем игрокам на сервере (поддерживает HEX и цвета).</li>
+                            <li><code>[message] &lt;сообщение&gt;</code> - Отправляет личное сообщение игроку, который открыл кейс.</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+            <!-- EN CONTENT -->
+            <div id="content-en" style="display: none;">
+                <section class="section doc-content">
+                    <h2 class="section-title">Configuration Files Setup (cases/*.yml)</h2>
+                    <div class="metadata-box">
+                        <p>Each case is configured in a separate YAML file located in the <code>cases/</code> directory of your plugin.</p>
+                        <p>In the configuration, you can fully customize the opening interface, the hologram display above the case block, as well as reward chances and commands.</p>
+                        
+                        <h3>Configuration File Parameters:</h3>
+                        <ul>
+                            <li><code>display-name</code>: Beautiful display name of the case (supports HEX colors and standard color codes).</li>
+                            <li><code>animation</code>: Opening animation name. By default, the 'chests' animation is available.</li>
+                            <li><code>gui</code>: GUI menu setup before opening the case.</li>
+                            <li><code>hologram</code>: Configuration of the persistent hologram above the physical case block.</li>
+                            <li><code>rewards</code>: List of rewards specifying chances, materials, and commands/messages upon winning.</li>
+                        </ul>
+
+                        <h3>Example Configuration File (cases/default.yml):</h3>
+<pre><code>display-name: "&#FF8C00&lGolden Case"
+animation: chests
+gui:
+  title: "&aCase: %case_display_name%"
+  rows: 6
+  items:
+    - material: GRAY_STAINED_GLASS_PANE
+      name: " "
+      slots: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 44]
+    - material: TRIPWIRE_HOOK
+      name: "&aStart opening"
+      lore:
+        - "&7Click to start the animation"
+        - "&7Requires 1 key"
+      slots: [22]
+      action: start
+    - type: history-1
+      slots: [45]
+    - type: history-2
+      slots: [46]
+    - type: history-3
+      slots: [47]
+    - type: history-4
+      slots: [48]
+    - type: history-5
+      slots: [49]
+
+hologram:
+  enabled: true
+  y-offset: 2.2
+  lines:
+    - "&#FF8C00&lGolden Case"
+    - "&7Left/Right Click to open"
+
+rewards:
+  diamond:
+    display-name: "&bDiamond"
+    material: DIAMOND
+    chance: 20.0
+    commands:
+      - "[command] give %username% diamond 3"
+      - "[message] &a[✓] &fYou successfully won &bDiamonds&f!"
+  gold:
+    display-name: "&6Gold Ingot"
+    material: GOLD_INGOT
+    chance: 50.0
+    commands:
+      - "[command] give %username% gold_ingot 5"
+      - "[broadcast] &6&lWinner! &e%username% &fwon &6Gold Ingots &ffrom the golden case!"
+  coal:
+    display-name: "&8Coal"
+    material: COAL
+    chance: 30.0
+    commands:
+      - "[command] give %username% coal 10"
+      - "[message] &a[✓] &fYou won &8Coal&f!"</code></pre>
+
+                        <h3>Supported Placeholders in GUI:</h3>
+                        <ul>
+                            <li><code>%keys%</code> - The number of player keys specifically for this case.</li>
+                            <li><code>%all_keys%</code> - The total number of player keys across all cases.</li>
+                            <li><code>%case_display_name%</code> - The display name of the case.</li>
+                            <li><code>%username%</code> - The player's nickname.</li>
+                        </ul>
+
+                        <h3>Action Modes for Winning Rewards:</h3>
+                        <ul>
+                            <li><code>[command] &lt;command&gt;</code> - Executes a command from the console. Supports placeholders.</li>
+                            <li><code>[broadcast] &lt;message&gt;</code> - Sends a message to all players on the server (supports HEX and colors).</li>
+                            <li><code>[message] &lt;message&gt;</code> - Sends a private message to the player who opened the case.</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
         </main>
         <footer class="footer">
             <div class="footer-logo">LostCases</div>
-            <div class="footer-copy">© 2026<br>Документация плагина.</div>
+            <div class="footer-copy" id="footer-ru">© 2026<br>Документация плагина.</div>
+            <div class="footer-copy" id="footer-en" style="display: none;">© 2026<br>Plugin documentation.</div>
         </footer>
     </div>
+
+    <script>
+        function setLang(lang) {
+            document.getElementById('content-ru').style.display = lang === 'ru' ? 'block' : 'none';
+            document.getElementById('footer-ru').style.display = lang === 'ru' ? 'block' : 'none';
+            
+            document.getElementById('content-en').style.display = lang === 'en' ? 'block' : 'none';
+            document.getElementById('footer-en').style.display = lang === 'en' ? 'block' : 'none';
+
+            document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            
+            localStorage.setItem('lang', lang);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedLang = localStorage.getItem('lang') || 'ru';
+            setLang(savedLang);
+        });
+    </script>
 </body>
 </html>
