@@ -11,62 +11,26 @@
         <header class="header">
             <div class="logo-area">
                 <h1>LostCases</h1>
-                <div class="breadcrumbs"><a href="index.html">Projects</a> / LostCases</div>
+                <div class="breadcrumbs"><a href="https://kernelfm.github.io/">Projects</a> / LostCases</div>
             </div>
         </header>
         <main>
-            <section class="section">
-                <h2 class="section-title">Ветки (Разделы)</h2>
-                <div class="grid">
-                    <button class="card tab-btn active" onclick="openTab('tab-main', this)">1.0 (1.21.11)</button>
-                    <button class="card tab-btn" onclick="openTab('tab-configs', this)">Конфиги</button>
-                </div>
-            </section>
+            <section class="section doc-content">
+                <h2 class="section-title">Настройка конфигурационных файлов (cases/*.yml)</h2>
+                <div class="metadata-box">
+                    <p>Каждый кейс настраивается в отдельном YAML-файле в директории <code>cases/</code> вашего плагина.</p>
+                    <p>В конфигурации можно полностью настроить интерфейс открытия, отображение голограммы над блоком кейса, а также шансы и команды наград.</p>
+                    
+                    <h3>Параметры файла конфигурации:</h3>
+                    <ul>
+                        <li><code>display-name</code>: Красивое отображаемое имя кейса (поддерживает HEX-цвета и стандартные коды).</li>
+                        <li><code>animation</code>: Название анимации открытия. По умолчанию доступна анимация chests (сундуки).</li>
+                        <li><code>gui</code>: Настройка GUI-меню перед открытием кейса.</li>
+                        <li><code>hologram</code>: Настройка постоянной голограммы над физическим блоком кейса.</li>
+                        <li><code>rewards</code>: Список наград с указанием шансов, материалов и команд/сообщений при выбивании.</li>
+                    </ul>
 
-            <div id="tab-main" class="tab-content active">
-                <section class="section">
-                    <h2 class="section-title">Информация</h2>
-                    <div class="metadata-box">
-                        <div class="meta-group">
-                            <h3>Основная информация</h3>
-                            <p>Текущая версия</p>
-                            <span>1.0</span>
-                        </div>
-                        <div class="meta-group">
-                            <h3>Совместимость</h3>
-                            <p>Версия Minecraft</p>
-                            <span>1.21.11</span>
-                        </div>
-                    </div>
-                </section>
-                <section class="section">
-                    <h2 class="section-title">Версии</h2>
-                    <div class="grid versions-grid">
-                        <div class="card version-card">
-                            <span class="version-name">1.0.0</span>
-                            <span class="badge badge-stable">STABLE</span>
-                        </div>
-                    </div>
-                </section>
-            </div>
-
-            <div id="tab-configs" class="tab-content" style="display: none;">
-                <section class="section doc-content">
-                    <h2 class="section-title">Настройка конфигурационных файлов (cases/*.yml)</h2>
-                    <div class="metadata-box">
-                        <p>Каждый кейс настраивается в отдельном YAML-файле в директории <code>cases/</code> вашего плагина.</p>
-                        <p>В конфигурации можно полностью настроить интерфейс открытия, отображение голограммы над блоком кейса, а также шансы и команды наград.</p>
-                        
-                        <h3>Параметры файла конфигурации:</h3>
-                        <ul>
-                            <li><code>display-name</code>: Красивое отображаемое имя кейса (поддерживает HEX-цвета и стандартные коды).</li>
-                            <li><code>animation</code>: Название анимации открытия. По умолчанию доступна анимация chests (сундуки).</li>
-                            <li><code>gui</code>: Настройка GUI-меню перед открытием кейса.</li>
-                            <li><code>hologram</code>: Настройка постоянной голограммы над физическим блоком кейса.</li>
-                            <li><code>rewards</code>: Список наград с указанием шансов, материалов и команд/сообщений при выбивании.</li>
-                        </ul>
-
-                        <h3>Пример файла конфигурации (cases/default.yml):</h3>
+                    <h3>Пример файла конфигурации (cases/default.yml):</h3>
 <pre><code>display-name: "&#FF8C00&lЗолотой Кейс"
 animation: chests
 gui:
@@ -124,45 +88,27 @@ rewards:
       - "[command] give %username% coal 10"
       - "[message] &a[✓] &fВы выиграли &8Уголь&f!"</code></pre>
 
-                        <h3>Поддерживаемые плейсхолдеры в GUI:</h3>
-                        <ul>
-                            <li><code>%keys%</code> - Количество ключей игрока именно для этого кейса.</li>
-                            <li><code>%all_keys%</code> - Общее количество ключей игрока по всем кейсам.</li>
-                            <li><code>%case_display_name%</code> - Отображаемое имя кейса.</li>
-                            <li><code>%username%</code> - Ник игрока.</li>
-                        </ul>
+                    <h3>Поддерживаемые плейсхолдеры в GUI:</h3>
+                    <ul>
+                        <li><code>%keys%</code> - Количество ключей игрока именно для этого кейса.</li>
+                        <li><code>%all_keys%</code> - Общее количество ключей игрока по всем кейсам.</li>
+                        <li><code>%case_display_name%</code> - Отображаемое имя кейса.</li>
+                        <li><code>%username%</code> - Ник игрока.</li>
+                    </ul>
 
-                        <h3>Режимы действий при выигрыше наград:</h3>
-                        <ul>
-                            <li><code>[command] &lt;команда&gt;</code> - Выполняет команду от консоли. Поддерживает плейсхолдеры.</li>
-                            <li><code>[broadcast] &lt;сообщение&gt;</code> - Отправляет сообщение всем игрокам на сервере (поддерживает HEX и цвета).</li>
-                            <li><code>[message] &lt;сообщение&gt;</code> - Отправляет личное сообщение игроку, который открыл кейс.</li>
-                        </ul>
-                    </div>
-                </section>
-            </div>
+                    <h3>Режимы действий при выигрыше наград:</h3>
+                    <ul>
+                        <li><code>[command] &lt;команда&gt;</code> - Выполняет команду от консоли. Поддерживает плейсхолдеры.</li>
+                        <li><code>[broadcast] &lt;сообщение&gt;</code> - Отправляет сообщение всем игрокам на сервере (поддерживает HEX и цвета).</li>
+                        <li><code>[message] &lt;сообщение&gt;</code> - Отправляет личное сообщение игроку, который открыл кейс.</li>
+                    </ul>
+                </div>
+            </section>
         </main>
         <footer class="footer">
             <div class="footer-logo">LostCases</div>
             <div class="footer-copy">© 2026<br>Документация плагина.</div>
         </footer>
     </div>
-
-    <script>
-        function openTab(tabId, btn) {
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => {
-                content.style.display = 'none';
-            });
-
-            const buttons = document.querySelectorAll('.tab-btn');
-            buttons.forEach(button => {
-                button.classList.remove('active');
-            });
-
-            document.getElementById(tabId).style.display = 'block';
-            btn.classList.add('active');
-        }
-    </script>
 </body>
 </html>
