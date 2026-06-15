@@ -160,7 +160,6 @@ button.card {
     text-align: right;
 }
 
-/* Стили для текстовой документации */
 .doc-content h3 {
     font-size: 1.1rem;
     font-weight: 600;
@@ -214,4 +213,40 @@ button.card {
     color: inherit;
     font-size: 0.85em;
     border-radius: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4rem;
+}
+
+.lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #9ca3af;
+    font-size: 0.9rem;
+}
+
+.lang-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: #6b7280;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    padding: 0;
+}
+
+.lang-btn:hover {
+    color: #374151;
+}
+
+.lang-btn.active {
+    color: #111827;
+    font-weight: 700;
 }
