@@ -19,195 +19,657 @@
                 <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
             </div>
         </header>
-        <main>
-            <!-- RU CONTENT -->
-            <div id="content-ru">
-                <section class="section doc-content">
-                    <h2 class="section-title">Настройка конфигурационных файлов (cases/*.yml)</h2>
-                    <div class="metadata-box">
-                        <p>Каждый кейс настраивается в отдельном YAML-файле в директории <code>cases/</code> вашего плагина.</p>
-                        <p>В конфигурации можно полностью настроить интерфейс открытия, отображение голограммы над блоком кейса, а также шансы и команды наград.</p>
-                        
-                        <h3>Параметры файла конфигурации:</h3>
-                        <ul>
-                            <li><code>display-name</code>: Красивое отображаемое имя кейса (поддерживает HEX-цвета и стандартные коды).</li>
-                            <li><code>animation</code>: Название анимации открытия. По умолчанию доступна анимация chests (сундуки).</li>
-                            <li><code>gui</code>: Настройка GUI-меню перед открытием кейса.</li>
-                            <li><code>hologram</code>: Настройка постоянной голограммы над физическим блоком кейса.</li>
-                            <li><code>rewards</code>: Список наград с указанием шансов, материалов и команд/сообщений при выбивании.</li>
-                            <li><code>animations</code>: Список доступных на данный момент анимаций: chests; piglins; soulwell; shulkers; pinata; melons; claw.</li>
-                        </ul>
+        
+        <div class="main-layout">
+            <main class="content-area">
+                <!-- RU CONTENT -->
+                <div id="content-ru">
+                    <section id="cases-setup-ru" class="section doc-content">
+                        <h2 class="section-title">1. Настройка файлов кейсов (cases/*.yml)</h2>
+                        <div class="metadata-box">
+                            <p>Конфигурация каждого кейса хранится в индивидуальном файле формата YAML в папке <code>plugins/LostCases/cases/</code>.</p>
+                            
+                            <h3>Основные параметры кейса:</h3>
+                            <ul>
+                                <li><code>display-name</code>: Отображаемое название кейса в заголовках меню, голограммах и сообщениях. Поддерживает HEX-цвета (например, <code>&#FF8C00</code>) и стандартные коды (например, <code>&a</code>).</li>
+                                <li><code>material</code>: Предмет, отображающий кейс. Вы можете указать стандартный материал Майнкрафта (например, <code>CHEST</code>, <code>ENDER_CHEST</code>) или Base64-строку текстуры для создания уникальной головы игрока.</li>
+                                <li><code>animation</code>: Название анимации открытия для этого кейса. Доступны: <code>chests</code>, <code>piglins</code>, <code>soulwell</code>, <code>shulkers</code>, <code>pinata</code>, <code>melons</code>, <code>claw</code>, <code>tnt</code>, <code>bees</code>, а также специальное значение <code>random</code> для выбора случайного эффекта при каждом открытии.</li>
+                                <li><code>able-to-gift</code>: Переключатель (<code>true</code> / <code>false</code>), разрешающий или запрещающий игрокам дарить ключи от этого кейса с помощью команды <code>/lc gift</code>.</li>
+                                <li><code>hologram</code>: Настройка постоянной голограммы над физическим блоком кейса. Содержит параметры <code>enabled</code> (включение), <code>y-offset</code> (высота над блоком) и <code>lines</code> (список строк текста голограммы).</li>
+                            </ul>
+                        </div>
+                    </section>
 
-                        <h3>Пример файла конфигурации (cases/default.yml):</h3>
-<pre><code>display-name: "&#FF8C00&lЗолотой Кейс"
-animation: chests
-gui:
-  title: "&aКейс: %case_display_name%"
-  rows: 6
-  items:
-    - material: GRAY_STAINED_GLASS_PANE
-      name: " "
-      slots: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 44]
-    - material: TRIPWIRE_HOOK
-      name: "&aНачать открытие"
-      lore:
-        - "&7Нажмите, чтобы начать анимацию"
-        - "&7Требуется 1 ключ"
-      slots: [22]
-      action: start
-    - type: history-1
-      slots: [45]
-    - type: history-2
-      slots: [46]
-    - type: history-3
-      slots: [47]
-    - type: history-4
-      slots: [48]
-    - type: history-5
-      slots: [49]
+                    <section id="gui-config-ru" class="section doc-content">
+                        <h2 class="section-title">2. Конфигурация GUI-интерфейса</h2>
+                        <div class="metadata-box">
+                            <p>Секция <code>gui:</code> внутри файла кейса отвечает за внешний вид инвентаря, открывающегося при нажатии на физический блок кейса.</p>
+                            
+                            <h3>Параметры GUI:</h3>
+                            <ul>
+                                <li><code>title</code>: Заголовок инвентаря. Поддерживает HEX-цвета и плейсхолдеры.</li>
+                                <li><code>rows</code>: Количество строк в инвентаре (от 1 до 6).</li>
+                                <li><code>items</code>: Список элементов меню с указанием слотов и типов действий.</li>
+                            </ul>
+                        </div>
+                    </section>
 
-hologram:
-  enabled: true
-  y-offset: 2.2
-  lines:
-    - "&#FF8C00&lЗолотой Кейс"
-    - "&7Нажмите ЛКМ/ПКМ для открытия"
+                    <section id="item-types-ru" class="section doc-content">
+                        <h2 class="section-title">3. Типы предметов в меню GUI</h2>
+                        <div class="metadata-box">
+                            <p>В списке <code>items</code> в конфигурации GUI вы можете настраивать предметы разных типов. Каждый тип решает свою задачу в интерфейсе кейса.</p>
 
-rewards:
-  diamond:
-    display-name: "&bАлмаз"
-    material: DIAMOND
-    chance: 20.0
-    commands:
-      - "[command] give %username% diamond 3"
-      - "[message] &a[✓] &fВы успешно выбили &bАлмазы&f!"
-  gold:
-    display-name: "&6Золотой слиток"
-    material: GOLD_INGOT
-    chance: 50.0
-    commands:
-      - "[command] give %username% gold_ingot 5"
-      - "[broadcast] &6&lВыигрыш! &e%username% &fвыбил &6Золотые слитки &fиз золотого кейса!"
-  coal:
-    display-name: "&8Уголь"
-    material: COAL
-    chance: 30.0
-    commands:
-      - "[command] give %username% coal 10"
-      - "[message] &a[✓] &fВы выиграли &8Уголь&f!"</code></pre>
+                            <!-- Декор -->
+                            <div id="type-decor-ru" class="sub-section-doc">
+                                <h3>3.1 Декоративные предметы (Декор)</h3>
+                                <p>Обычные предметы с фиксированным материалом, названием и описанием. Они служат для оформления меню, заполнения пустого пространства и не вызывают никаких игровых событий при клике.</p>
+                                <h4>Параметры элемента декора:</h4>
+                                <ul>
+                                    <li><code>material</code>: Материал предмета в игре (например, <code>GRAY_STAINED_GLASS_PANE</code>).</li>
+                                    <li><code>name</code>: Название предмета (поддерживает цветовые коды, для пустого имени укажите <code>" "</code>).</li>
+                                    <li><code>slots</code> или <code>slot</code>: Список слотов или один слот, где будет размещен предмет.</li>
+                                    <li><code>lore</code>: *(Опционально)* Список строк описания предмета.</li>
+                                </ul>
+<pre><code>- material: GRAY_STAINED_GLASS_PANE
+  name: " "
+  slots: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 44]</code></pre>
+                            </div>
 
-                        <h3>Поддерживаемые плейсхолдеры в GUI:</h3>
-                        <ul>
-                            <li><code>%keys%</code> - Количество ключей игрока именно для этого кейса.</li>
-                            <li><code>%all_keys%</code> - Общее количество ключей игрока по всем кейсам.</li>
-                            <li><code>%case_display_name%</code> - Отображаемое имя кейса.</li>
-                            <li><code>%username%</code> - Ник игрока.</li>
-                        </ul>
+                            <hr class="doc-divider">
 
-                        <h3>Режимы действий при выигрыше наград:</h3>
-                        <ul>
-                            <li><code>[command] &lt;команда&gt;</code> - Выполняет команду от консоли. Поддерживает плейсхолдеры.</li>
-                            <li><code>[broadcast] &lt;сообщение&gt;</code> - Отправляет сообщение всем игрокам на сервере (поддерживает HEX и цвета).</li>
-                            <li><code>[message] &lt;сообщение&gt;</code> - Отправляет личное сообщение игроку, который открыл кейс.</li>
-                        </ul>
-                    </div>
-                </section>
-            </div>
+                            <!-- Кейсы (case) -->
+                            <div id="type-case-ru" class="sub-section-doc">
+                                <h3>3.2 Отображение ключей игрока (тип: case)</h3>
+                                <p>Тип <code>case</code> динамически выводит в меню предметы кейсов, от которых у игрока есть ключи в данный момент. Каждый ключ отображается как **отдельный предмет**.</p>
+                                <h4>Как это работает:</h4>
+                                <ul>
+                                    <li>Плагин сканирует все доступные кейсы и количество ключей игрока для каждого.</li>
+                                    <li>Для каждого ключа генерируется индивидуальный предмет. Если у игрока 3 золотых ключа и 2 обычных, плагин создаст 5 предметов по очереди, расположив их в указанных слотах.</li>
+                                    <li><strong>Открытие по ЛКМ:</strong> При клике левой кнопкой мыши по такому предмету меню закрывается, списывается 1 ключ и запускается анимация открытия этого кейса.</li>
+                                </ul>
+                                <h4>Параметры элемента "case":</h4>
+                                <ul>
+                                    <li><code>type</code>: Обязательно значение <code>case</code>.</li>
+                                    <li><code>slots</code>: Список слотов под кейсы. Кейсы заполняются по очереди.</li>
+                                    <li><code>material</code>: *(Опционально)* Переопределяет материал предмета. Если не указан, берется материал самого кейса из начала его конфига.</li>
+                                    <li><code>name</code> / <code>lore</code>: *(Опционально)* Кастомное имя и описание предмета в меню с поддержкой плейсхолдеров.</li>
+                                </ul>
+<pre><code>- type: case
+  slots: [10, 11, 12, 13, 14, 15, 16]
+  name: "&bКейс: %case_display_name%"
+  lore:
+    - "&7Ключей: &e%keys% шт."
+    - "&aНажмите ЛКМ, чтобы открыть!"</code></pre>
+                                <h4>Плейсхолдеры для "case":</h4>
+                                <ul>
+                                    <li><code>%case_display_name%</code> — Имя кейса, которому принадлежит предмет.</li>
+                                    <li><code>%keys%</code> — Количество ключей игрока для этого кейса.</li>
+                                    <li><code>%all_keys%</code> — Общее количество ключей игрока от всех кейсов.</li>
+                                    <li><code>%username%</code> — Никнейм игрока.</li>
+                                </ul>
+                            </div>
 
-            <!-- EN CONTENT -->
-            <div id="content-en" style="display: none;">
-                <section class="section doc-content">
-                    <h2 class="section-title">Configuration Files Setup (cases/*.yml)</h2>
-                    <div class="metadata-box">
-                        <p>Each case is configured in a separate YAML file located in the <code>cases/</code> directory of your plugin.</p>
-                        <p>In the configuration, you can fully customize the opening interface, the hologram display above the case block, as well as reward chances and commands.</p>
-                        
-                        <h3>Configuration File Parameters:</h3>
-                        <ul>
-                            <li><code>display-name</code>: Beautiful display name of the case (supports HEX colors and standard color codes).</li>
-                            <li><code>animation</code>: Opening animation name. By default, the 'chests' animation is available.</li>
-                            <li><code>gui</code>: GUI menu setup before opening the case.</li>
-                            <li><code>hologram</code>: Configuration of the persistent hologram above the physical case block.</li>
-                            <li><code>rewards</code>: List of rewards specifying chances, materials, and commands/messages upon winning.</li>
-                            <li><code>animations</code>: List of available animations: chests; piglins; soulwell; shulkers.</li>
-                        </ul>
+                            <hr class="doc-divider">
 
-                        <h3>Example Configuration File (cases/default.yml):</h3>
-<pre><code>display-name: "&#FF8C00&lGolden Case"
-animation: chests
-gui:
-  title: "&aCase: %case_display_name%"
-  rows: 6
-  items:
-    - material: GRAY_STAINED_GLASS_PANE
-      name: " "
-      slots: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 44]
-    - material: TRIPWIRE_HOOK
-      name: "&aStart opening"
-      lore:
-        - "&7Click to start the animation"
-        - "&7Requires 1 key"
-      slots: [22]
-      action: start
-    - type: history-1
-      slots: [45]
-    - type: history-2
-      slots: [46]
-    - type: history-3
-      slots: [47]
-    - type: history-4
-      slots: [48]
-    - type: history-5
-      slots: [49]
+                            <!-- Запуск (start) -->
+                            <div id="type-start-ru" class="sub-section-doc">
+                                <h3>3.3 Кнопка мгновенного запуска (action: start)</h3>
+                                <p>Предмет-кнопка, при нажатии на который запускается открытие того кейса, блок которого был нажат в мире. Ключ списывается со счета игрока.</p>
+                                <h4>Параметры кнопки старта:</h4>
+                                <ul>
+                                    <li><code>material</code>: Предмет кнопки в инвентаре (например, <code>TRIPWIRE_HOOK</code>).</li>
+                                    <li><code>action</code>: Обязательно значение <code>start</code>.</li>
+                                    <li><code>slots</code>: Слот, в котором находится кнопка (обычно центр меню).</li>
+                                    <li><code>name</code> / <code>lore</code>: Отображаемое имя и описание кнопки.</li>
+                                </ul>
+<pre><code>- material: TRIPWIRE_HOOK
+  name: "&aНачать открытие"
+  lore:
+    - "&7Требуется 1 ключ"
+  slots: [22]
+  action: start</code></pre>
+                            </div>
 
-hologram:
-  enabled: true
-  y-offset: 2.2
-  lines:
-    - "&#FF8C00&lGolden Case"
-    - "&7Left/Right Click to open"
+                            <hr class="doc-divider">
 
-rewards:
-  diamond:
-    display-name: "&bDiamond"
-    material: DIAMOND
-    chance: 20.0
-    commands:
-      - "[command] give %username% diamond 3"
-      - "[message] &a[✓] &fYou successfully won &bDiamonds&f!"
-  gold:
-    display-name: "&6Gold Ingot"
-    material: GOLD_INGOT
-    chance: 50.0
-    commands:
-      - "[command] give %username% gold_ingot 5"
-      - "[broadcast] &6&lWinner! &e%username% &fwon &6Gold Ingots &ffrom the golden case!"
-  coal:
-    display-name: "&8Coal"
-    material: COAL
-    chance: 30.0
-    commands:
-      - "[command] give %username% coal 10"
-      - "[message] &a[✓] &fYou won &8Coal&f!"</code></pre>
+                            <!-- История (history) -->
+                            <div id="type-history-ru" class="sub-section-doc">
+                                <h3>3.4 Элементы истории выигрышей (type: history-N)</h3>
+                                <p>Выводят последние выигранные призы в данном кейсе на сервере. Поддерживается до 9 слотов истории.</p>
+                                <h4>Как это работает:</h4>
+                                <ul>
+                                    <li><code>type: history-1</code> отображает самую последнюю награду, <code>history-2</code> — предшествующую ей и так далее.</li>
+                                    <li>Если истории выигрышей еще нет, предмет автоматически заменяется на серый краситель с текстом <code>Нет истории</code> (сообщение настраивается в языковом файле).</li>
+                                    <li>При наведении на предмет истории показывается ник победителя и выигранная им награда.</li>
+                                </ul>
+<pre><code>- type: history-1
+  slots: [45]
+- type: history-2
+  slots: [46]</code></pre>
+                            </div>
+                        </div>
+                    </section>
 
-                        <h3>Supported Placeholders in GUI:</h3>
-                        <ul>
-                            <li><code>%keys%</code> - The number of player keys specifically for this case.</li>
-                            <li><code>%all_keys%</code> - The total number of player keys across all cases.</li>
-                            <li><code>%case_display_name%</code> - The display name of the case.</li>
-                            <li><code>%username%</code> - The player's nickname.</li>
-                        </ul>
+                    <section id="rewards-ru" class="section doc-content">
+                        <h2 class="section-title">4. Настройка наград (rewards)</h2>
+                        <div class="metadata-box">
+                            <p>В секции <code>rewards:</code> описываются все призы, шансы их выпадения и команды, которые выполняются при победе.</p>
+                            
+                            <h3>Параметры награды:</h3>
+                            <ul>
+                                <li><code>display-name</code>: Название награды для вывода в голограммах и сообщениях.</li>
+                                <li><code>material</code>: Материал предмета для отображения в голограммах и истории выигрышей.</li>
+                                <li><code>chance</code>: Шанс выпадения награды в процентах (например, <code>20.0</code> или <code>0.5</code>).</li>
+                                <li><code>commands</code>: Список выполняемых действий после победы.</li>
+                            </ul>
 
-                        <h3>Action Modes for Winning Rewards:</h3>
-                        <ul>
-                            <li><code>[command] &lt;command&gt;</code> - Executes a command from the console. Supports placeholders.</li>
-                            <li><code>[broadcast] &lt;message&gt;</code> - Sends a message to all players on the server (supports HEX and colors).</li>
-                            <li><code>[message] &lt;message&gt;</code> - Sends a private message to the player who opened the case.</li>
-                        </ul>
-                    </div>
-                </section>
-            </div>
-        </main>
+                            <h3>Действия при выигрыше (commands):</h3>
+                            <ul>
+                                <li><code>[command] &lt;команда&gt;</code> — Выполняет консольную команду (например, <code>[command] give %username% diamond 1</code>).</li>
+                                <li><code>[message] &lt;сообщение&gt;</code> — Отправляет приватное сообщение в чат победителю.</li>
+                                <li><code>[broadcast] &lt;сообщение&gt;</code> — Отправляет публичное объявление о выигрыше всем игрокам на сервере.</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section id="global-config-ru" class="section doc-content">
+                        <h2 class="section-title">5. Глобальные настройки (config.yml)</h2>
+                        <div class="metadata-box">
+                            <p>Главный конфигурационный файл плагина содержит глобальные параметры локализации, префиксов, прав доступа и автоматического восстановления анимаций.</p>
+<pre><code>lang: ru
+prefix: "&#FF8C00&lLostCases &7» &f"
+
+permissions:
+  use: "lostcases.use"
+  gift: "lostcases.gift"
+  admin: "lostcases.admin"
+
+# Если значение равно true, при удалении YML-файла анимации из папки
+# animations он автоматически восстановится из шаблона при релоаде.
+# Если false - удаленный файл анимации отключает эту анимацию в плагине.
+animations:
+  chests: true
+  piglins: true
+  soulwell: true
+  shulkers: true
+  pinata: true
+  melons: true
+  claw: true
+  tnt: true
+  bees: true</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="animations-ru" class="section doc-content">
+                        <h2 class="section-title">6. Анимации кейсов</h2>
+                        <div class="metadata-box">
+                            <p>В плагине представлено 9 встроенных типов анимаций открытия кейсов в мире:</p>
+                            
+                            <div class="anim-grid">
+                                <div class="anim-card">
+                                    <h4>Сундуки (chests)</h4>
+                                    <p>Вокруг блока кейса поочередно спавнятся сундуки. Игрок выбирает один из них кликом ЛКМ для получения приза.</p>
+                                    <div class="anim-gif"><img src="https://i.imgur.com/gnN1XTt.gif" alt="chests"></div>
+                                </div>
+                                <div class="anim-card">
+                                    <h4>Пиглины (piglins)</h4>
+                                    <p>Вокруг кейса спавнятся пиглины. Игрок кликает ЛКМ по одному из них, запуская эффекты выигрыша.</p>
+                                    <div class="anim-gif"><img src="https://i.imgur.com/B6Vi8VR.gif" alt="piglins"></div>
+                                </div>
+                                <div class="anim-card">
+                                    <h4>Шалкеры (shulkers)</h4>
+                                    <p>Цветные шалкеры кружатся над блоком кейса. Выбор происходит при клике ЛКМ по летящему шалкеру.</p>
+                                    <div class="anim-gif"><img src="https://i.imgur.com/RsDKlj4.gif" alt="shulkers"></div>
+                                </div>
+                                <div class="anim-card">
+                                    <h4>Черепа (soulwell)</h4>
+                                    <p>Черепа медленно летают вокруг источника душ. Игру необходимо выбрать и кликнуть по одному из них.</p>
+                                    <div class="anim-gif"><img src="https://i.imgur.com/YXAV69J.gif" alt="soulwell"></div>
+                                </div>
+                                <div class="anim-card">
+                                    <h4>Арбузы (melons)</h4>
+                                    <p>Ломтики арбуза кружат над кейсом. Кликом ЛКМ игрок разбивает выбранный арбуз.</p>
+                                    <div class="anim-gif"><img src="https://i.imgur.com/m1uOOQO.gif" alt="melons"></div>
+                                </div>
+                                <div class="anim-card">
+                                    <h4>Пиньята (pinata)</h4>
+                                    <p>Спавнится пиньята в виде ламы/фигуры. Игрок должен ударить её ЛКМ несколько раз, чтобы разбить и забрать приз.</p>
+                                    <div class="anim-gif"><img src="https://i.imgur.com/YV2kRm8.gif" alt="pinata"></div>
+                                </div>
+                                <div class="anim-card">
+                                    <h4>Клешня (claw)</h4>
+                                    <p>Механическая клешня опускается сверху над кейсом и поднимает подарочную коробку с призом.</p>
+                                    <div class="anim-gif"><img src="https://i.imgur.com/L2O8dGh.gif" alt="claw"></div>
+                                </div>
+                                <div class="anim-card">
+                                    <h4>Динамит (tnt)</h4>
+                                    <p>Блоки ТНТ вылетают вверх из кейса по параболической траектории и встают по кругу. Клик по одному из них вызывает праздничный взрыв.</p>
+                                    <div class="anim-gif"><img src="https://i.imgur.com/ePbGYMO.gif" alt="tnt"></div>
+                                </div>
+                                <div class="anim-card">
+                                    <h4>Пчелы (bees)</h4>
+                                    <p>Рой пчел вылетает из кейса. При клике ЛКМ по пчеле рой застывает, пчелы поворачиваются к центру и показывают призы.</p>
+                                    <div class="anim-gif"><img src="https://i.imgur.com/y8NIUdt.gif" alt="bees"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="commands-ru" class="section doc-content">
+                        <h2 class="section-title">7. Список команд и прав доступа</h2>
+                        <div class="metadata-box">
+                            <table class="cmd-table">
+                                <thead>
+                                    <tr>
+                                        <th>Команда</th>
+                                        <th>Описание</th>
+                                        <th>Право (Permission)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>/lc keys</code></td>
+                                        <td>Посмотреть свои ключи</td>
+                                        <td><code>lostcases.use</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/lc gift &lt;игрок&gt; &lt;кейс&gt; &lt;кол-во&gt;</code></td>
+                                        <td>Подарить ключи другому игроку</td>
+                                        <td><code>lostcases.gift</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/lc set &lt;кейс&gt;</code></td>
+                                        <td>Установить кейс на целевой блок</td>
+                                        <td><code>lostcases.admin</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/lc delete</code></td>
+                                        <td>Удалить кейс с блока под прицелом</td>
+                                        <td><code>lostcases.admin</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/lc givekey &lt;игрок&gt; &lt;кейс&gt; &lt;кол-во&gt;</code></td>
+                                        <td>Выдать ключи игроку</td>
+                                        <td><code>lostcases.admin</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/lc takekeys &lt;игрок&gt; &lt;кейс&gt; &lt;кол-во&gt;</code></td>
+                                        <td>Забрать ключи у игрока</td>
+                                        <td><code>lostcases.admin</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/lc giveall &lt;кейс&gt; &lt;кол-во&gt;</code></td>
+                                        <td>Выдать ключи всем онлайн-игрокам</td>
+                                        <td><code>lostcases.admin</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/lc infoplayer &lt;игрок&gt;</code></td>
+                                        <td>Посмотреть ключи другого игрока</td>
+                                        <td><code>lostcases.admin</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/lc on/off &lt;кейс&gt;</code></td>
+                                        <td>Включить / временно отключить кейс</td>
+                                        <td><code>lostcases.admin</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/lc reload</code></td>
+                                        <td>Перезагрузить плагин</td>
+                                        <td><code>lostcases.admin</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- EN CONTENT -->
+                <div id="content-en" style="display: none;">
+                    <section id="cases-setup-en" class="section doc-content">
+                        <h2 class="section-title">1. Case Configuration Setup (cases/*.yml)</h2>
+                        <div class="metadata-box">
+                            <p>The configuration for each case is stored in an individual YAML file inside the <code>plugins/LostCases/cases/</code> directory.</p>
+                            
+                            <h3>Core Case Parameters:</h3>
+                            <ul>
+                                <li><code>display-name</code>: Display name of the case. Supports HEX color codes (e.g., <code>&#FF8C00</code>) and standard color codes (e.g., <code>&a</code>).</li>
+                                <li><code>material</code>: Block representing the case in-game (e.g. <code>CHEST</code>, <code>ENDER_CHEST</code>) or a Base64 skin texture string for a custom player head.</li>
+                                <li><code>animation</code>: Opening animation name. Available: <code>chests</code>, <code>piglins</code>, <code>soulwell</code>, <code>shulkers</code>, <code>pinata</code>, <code>melons</code>, <code>claw</code>, <code>tnt</code>, <code>bees</code>, and the special value <code>random</code> to select a random effect on each open.</li>
+                                <li><code>able-to-gift</code>: Toggle (<code>true</code> / <code>false</code>) that allows or denies players from gifting keys of this case to others using the <code>/lc gift</code> command.</li>
+                                <li><code>hologram</code>: Floating text above the case block. Contains <code>enabled</code> (toggle), <code>y-offset</code> (height offset), and <code>lines</code> (text strings list).</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section id="gui-config-en" class="section doc-content">
+                        <h2 class="section-title">2. GUI Configuration</h2>
+                        <div class="metadata-box">
+                            <p>The <code>gui:</code> section within the case config file defines the inventory menu layout that opens when interacting with the physical case block.</p>
+                            
+                            <h3>GUI Parameters:</h3>
+                            <ul>
+                                <li><code>title</code>: Inventory title. Supports HEX colors and placeholders.</li>
+                                <li><code>rows</code>: Number of inventory rows (from 1 to 6).</li>
+                                <li><code>items</code>: List of GUI elements with their slot coordinates and action types.</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section id="item-types-en" class="section doc-content">
+                        <h2 class="section-title">3. GUI Menu Item Types</h2>
+                        <div class="metadata-box">
+                            <p>In the <code>items</code> list of the GUI config, you can configure different types of items. Each type serves a specific purpose in the case interface.</p>
+
+                            <!-- Decor -->
+                            <div id="type-decor-en" class="sub-section-doc">
+                                <h3>3.1 Static Decorative Items (Decor)</h3>
+                                <p>Standard items with static materials, display names, and lore descriptions. They are used for menu styling and filling empty space, triggering no events on click.</p>
+                                <h4>Decor Item Parameters:</h4>
+                                <ul>
+                                    <li><code>material</code>: The Minecraft material name (e.g. <code>GRAY_STAINED_GLASS_PANE</code>).</li>
+                                    <li><code>name</code>: The item's display name (supports color codes; use <code>" "</code> for empty name).</li>
+                                    <li><code>slots</code> or <code>slot</code>: Coordinates where the item will be rendered.</li>
+                                    <li><code>lore</code>: *(Optional)* List of item lore strings.</li>
+                                </ul>
+<pre><code>- material: GRAY_STAINED_GLASS_PANE
+  name: " "
+  slots: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 44]</code></pre>
+                            </div>
+
+                            <hr class="doc-divider">
+
+                            <!-- Case -->
+                            <div id="type-case-en" class="sub-section-doc">
+                                <h3>3.2 Player Key Slots (type: case)</h3>
+                                <p>The <code>case</code> type dynamically displays case items representing key slots that the player currently owns. Each key is rendered as a **separate stack**.</p>
+                                <h4>How it works:</h4>
+                                <ul>
+                                    <li>The plugin checks all loaded cases and the player's keys for each.</li>
+                                    <li>For every single key, a separate item stack is generated. If a player owns 3 golden keys and 2 common keys, the menu will show 5 items sequentially in the designated slots.</li>
+                                    <li><strong>Left-Click Opening:</strong> Left-clicking any case item closes the GUI, takes 1 key, and immediately triggers the opening animation at the block.</li>
+                                </ul>
+                                <h4>"case" Item Parameters:</h4>
+                                <ul>
+                                    <li><code>type</code>: Must be set to <code>case</code>.</li>
+                                    <li><code>slots</code>: List of slot coordinates to populate with cases.</li>
+                                    <li><code>material</code>: *(Optional)* Overrides the item material. If not set, it defaults to the case block's material.</li>
+                                    <li><code>name</code> / <code>lore</code>: *(Optional)* Custom name and lore supporting placeholders.</li>
+                                </ul>
+<pre><code>- type: case
+  slots: [10, 11, 12, 13, 14, 15, 16]
+  name: "&bCase: %case_display_name%"
+  lore:
+    - "&7Keys: &e%keys% pcs."
+    - "&aLeft-Click to open!"</code></pre>
+                                <h4>Placeholders for "case":</h4>
+                                <ul>
+                                    <li><code>%case_display_name%</code> — The display name of the case.</li>
+                                    <li><code>%keys%</code> — Number of keys the player owns for this specific case.</li>
+                                    <li><code>%all_keys%</code> — Total keys the player owns across all cases on the server.</li>
+                                    <li><code>%username%</code> — The nickname of the player.</li>
+                                </ul>
+                            </div>
+
+                            <hr class="doc-divider">
+
+                            <!-- Start -->
+                            <div id="type-start-en" class="sub-section-doc">
+                                <h3>3.3 Instant Start Button (action: start)</h3>
+                                <p>A button that, when clicked, consumes 1 key and starts the opening animation for the clicked case block in the world.</p>
+                                <h4>Start Button Parameters:</h4>
+                                <ul>
+                                    <li><code>material</code>: Button item material (e.g. <code>TRIPWIRE_HOOK</code>).</li>
+                                    <li><code>action</code>: Must be set to <code>start</code>.</li>
+                                    <li><code>slots</code>: The slot coordinate for the button (usually the center).</li>
+                                    <li><code>name</code> / <code>lore</code>: Custom display name and lore.</li>
+                                </ul>
+<pre><code>- material: TRIPWIRE_HOOK
+  name: "&aStart Opening"
+  lore:
+    - "&7Requires 1 key"
+  slots: [22]
+  action: start</code></pre>
+                            </div>
+
+                            <hr class="doc-divider">
+
+                            <!-- History -->
+                            <div id="type-history-en" class="sub-section-doc">
+                                <h3>3.4 Winner History Items (type: history-N)</h3>
+                                <p>Displays the history of recently won prizes from this case on the server. Supports up to 9 history slots.</p>
+                                <h4>How it works:</h4>
+                                <ul>
+                                    <li><code>type: history-1</code> shows the most recent win, <code>history-2</code> shows the one before that, etc.</li>
+                                    <li>If there is no history recorded yet, the slot displays gray dye with the text <code>No history</code>.</li>
+                                    <li>Hovering over the item reveals the winner's name and their prize.</li>
+                                </ul>
+<pre><code>- type: history-1
+  slots: [45]
+- type: history-2
+  slots: [46]</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="rewards-en" class="section doc-content">
+                        <h2 class="section-title">4. Reward Settings (rewards)</h2>
+                        <div class="metadata-box">
+                            <p>The <code>rewards:</code> section lists all potential prizes, their drop rates, and winning actions.</p>
+                            
+                            <h3>Reward Parameters:</h3>
+                            <ul>
+                                <li><code>display-name</code>: The name of the reward shown in chat messages and holograms.</li>
+                                <li><code>material</code>: Item material displayed in holograms and winning history.</li>
+                                <li><code>chance</code>: The drop chance percentage (e.g. <code>20.0</code> or <code>0.5</code>).</li>
+                                <li><code>commands</code>: Action commands executed upon winning.</li>
+                            </ul>
+
+                            <h3>Winning Action Modes (commands):</h3>
+                            <ul>
+                                <li><code>[command] &lt;command&gt;</code> — Executes a console command (e.g. <code>[command] give %username% diamond 1</code>).</li>
+                                <li><code>[message] &lt;message&gt;</code> — Sends a private chat message to the winner.</li>
+                                <li><code>[broadcast] &lt;message&gt;</code> — Broadcasts a winning announcement to all online players.</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section id="global-config-en" class="section doc-content">
+                        <h2 class="section-title">5. Global Configurations (config.yml)</h2>
+                        <div class="metadata-box">
+                            <p>The main configuration file of the plugin controls default language, prefix, command permissions, and animation file settings.</p>
+<pre><code>lang: en
+prefix: "&#FF8C00&lLostCases &7» &f"
+
+permissions:
+  use: "lostcases.use"
+  gift: "lostcases.gift"
+  admin: "lostcases.admin"
+
+# If set to true, deleted animation files in animations/ folder will automatically restore.
+# If set to false, the animation will not restore and remains disabled.
+animations:
+  chests: true
+  piglins: true
+  soulwell: true
+  shulkers: true
+  pinata: true
+  melons: true
+  claw: true
+  tnt: true
+  bees: true</code></pre>
+                        </div>
+                    </section>
+
+                    <section id="animations-en" class="section doc-content">
+                        <h2 class="section-title">6. Case Animations</h2>
+                        <div class="metadata-box">
+                            <p>The plugin offers 9 built-in opening animation types in the game world:</p>
+                            
+                            <div class="anim-grid">
+                                <div class="anim-card">
+                                    <h4>Chests (chests)</h4>
+                                    <p>Chests spawn around the case block one by one. The player left-clicks a chest to reveal their reward.</p>
+                                    <div class="anim-gif"><img src="https://i.imgur.com/PLACEHOLDER1.gif" alt="chests"></div>
+                                </div>
+                                <div class="anim-card">
+                                    <h4>Piglins (piglins)</h4>
+                                    <p>Piglins spawn around the case. The player left-clicks a piglin to trigger winning effects and show the prize.</p>
+                                    <div class="anim-gif"><img src="https://i.imgur.com/PLACEHOLDER2.gif" alt="piglins"></div>
+                                </div>
+                                <div class="anim-card">
+                                    <h4>Shulkers (shulkers)</h4>
+                                    <p>Colored shulkers circle above the case. Left-click any shulker to select it.</p>
+                                    <div class="anim-gif"><img src="https://i.imgur.com/PLACEHOLDER3.gif" alt="shulkers"></div>
+                                </div>
+                                <div class="anim-card">
+                                    <h4>Soul Well (soulwell)</h4>
+                                    <p>Skulls rotate slowly around a mystical well. Click any skull to reveal the reward.</p>
+                                    <div class="anim-gif"><img src="https://i.imgur.com/PLACEHOLDER4.gif" alt="soulwell"></div>
+                                </div>
+                                <div class="anim-card">
+                                    <h4>Watermelons (melons)</h4>
+                                    <p>Watermelon slices circle the case block. The player left-clicks to slice open a melon.</p>
+                                    <div class="anim-gif"><img src="https://i.imgur.com/PLACEHOLDER5.gif" alt="melons"></div>
+                                </div>
+                                <div class="anim-card">
+                                    <h4>Pinata (pinata)</h4>
+                                    <p>A pinata lama/figure spawns. The player must hit it with Left-Click repeatedly until it bursts with rewards.</p>
+                                    <div class="anim-gif"><img src="https://i.imgur.com/PLACEHOLDER6.gif" alt="pinata"></div>
+                                </div>
+                                <div class="anim-card">
+                                    <h4>Claw (claw)</h4>
+                                    <p>A classic claw machine hook drops from above to retrieve a prize gift box.</p>
+                                    <div class="anim-gif"><img src="https://i.imgur.com/PLACEHOLDER7.gif" alt="claw"></div>
+                                </div>
+                                <div class="anim-card">
+                                    <h4>TNT (tnt)</h4>
+                                    <p>TNT blocks fly up from the case in a smooth arc. The player left-clicks one to explode it and claim the prize.</p>
+                                    <div class="anim-gif"><img src="https://i.imgur.com/PLACEHOLDER8.gif" alt="tnt"></div>
+                                </div>
+                                <div class="anim-card">
+                                    <h4>Bees (bees)</h4>
+                                    <p>Bees swarm out of the case. Left-clicking a bee freezes the swarm, makes them face the center block, and reveals rewards.</p>
+                                    <div class="anim-gif"><img src="https://i.imgur.com/PLACEHOLDER9.gif" alt="bees"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="commands-en" class="section doc-content">
+                        <h2 class="section-title">7. Commands & Permissions</h2>
+                        <div class="metadata-box">
+                            <table class="cmd-table">
+                                <thead>
+                                    <tr>
+                                        <th>Command</th>
+                                        <th>Description</th>
+                                        <th>Permission</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>/lc keys</code></td>
+                                        <td>Check your keys count</td>
+                                        <td><code>lostcases.use</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/lc gift &lt;player&gt; &lt;case&gt; &lt;count&gt;</code></td>
+                                        <td>Gift keys to another player</td>
+                                        <td><code>lostcases.gift</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/lc set &lt;case&gt;</code></td>
+                                        <td>Bind a case to the looked-at block</td>
+                                        <td><code>lostcases.admin</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/lc delete</code></td>
+                                        <td>Remove a case from a block</td>
+                                        <td><code>lostcases.admin</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/lc givekey &lt;player&gt; &lt;case&gt; &lt;amount&gt;</code></td>
+                                        <td>Give keys to a player</td>
+                                        <td><code>lostcases.admin</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/lc takekeys &lt;player&gt; &lt;case&gt; &lt;amount&gt;</code></td>
+                                        <td>Take keys from a player</td>
+                                        <td><code>lostcases.admin</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/lc giveall &lt;case&gt; &lt;amount&gt;</code></td>
+                                        <td>Give keys to all online players</td>
+                                        <td><code>lostcases.admin</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/lc infoplayer &lt;player&gt;</code></td>
+                                        <td>View a player's keys</td>
+                                        <td><code>lostcases.admin</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/lc on/off &lt;case&gt;</code></td>
+                                        <td>Enable / temporarily disable a case</td>
+                                        <td><code>lostcases.admin</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>/lc reload</code></td>
+                                        <td>Reload configs, holograms, and addons</td>
+                                        <td><code>lostcases.admin</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </main>
+            
+            <aside class="navigation-sidebar">
+                <!-- RU SIDEBAR -->
+                <div id="sidebar-ru">
+                    <h3 class="sidebar-title">Содержание</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="#cases-setup-ru">1. Настройка кейсов</a></li>
+                        <li><a href="#gui-config-ru">2. Настройка GUI</a></li>
+                        <li>
+                            <a href="#item-types-ru">3. Типы предметов</a>
+                            <ul class="sidebar-sublinks">
+                                <li><a href="#type-decor-ru">3.1 Декор</a></li>
+                                <li><a href="#type-case-ru">3.2 Кейсы (Ключи)</a></li>
+                                <li><a href="#type-start-ru">3.3 Кнопка Старта</a></li>
+                                <li><a href="#type-history-ru">3.4 История призов</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#rewards-ru">4. Настройка наград</a></li>
+                        <li><a href="#global-config-ru">5. Настройки config.yml</a></li>
+                        <li><a href="#animations-ru">6. Анимации открытия</a></li>
+                        <li><a href="#commands-ru">7. Команды и права</a></li>
+                    </ul>
+                </div>
+                <!-- EN SIDEBAR -->
+                <div id="sidebar-en" style="display: none;">
+                    <h3 class="sidebar-title">Table of Contents</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="#cases-setup-en">1. Cases Config</a></li>
+                        <li><a href="#gui-config-en">2. GUI Layout</a></li>
+                        <li>
+                            <a href="#item-types-en">3. GUI Item Types</a>
+                            <ul class="sidebar-sublinks">
+                                <li><a href="#type-decor-en">3.1 Static Decor</a></li>
+                                <li><a href="#type-case-en">3.2 Case Key Slots</a></li>
+                                <li><a href="#type-start-en">3.3 Start Button</a></li>
+                                <li><a href="#type-history-en">3.4 Win History</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#rewards-en">4. Rewards Config</a></li>
+                        <li><a href="#global-config-en">5. config.yml Setup</a></li>
+                        <li><a href="#animations-en">6. Case Animations</a></li>
+                        <li><a href="#commands-en">7. Commands & Perms</a></li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+
         <footer class="footer">
             <div class="footer-logo">LostCases</div>
             <div class="footer-copy" id="footer-ru">© 2026<br>Документация плагина.</div>
@@ -217,12 +679,16 @@ rewards:
 
     <script>
         function setLang(lang) {
+            // Content
             document.getElementById('content-ru').style.display = lang === 'ru' ? 'block' : 'none';
             document.getElementById('footer-ru').style.display = lang === 'ru' ? 'block' : 'none';
+            document.getElementById('sidebar-ru').style.display = lang === 'ru' ? 'block' : 'none';
             
             document.getElementById('content-en').style.display = lang === 'en' ? 'block' : 'none';
             document.getElementById('footer-en').style.display = lang === 'en' ? 'block' : 'none';
+            document.getElementById('sidebar-en').style.display = lang === 'en' ? 'block' : 'none';
 
+            // Buttons
             document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
             
