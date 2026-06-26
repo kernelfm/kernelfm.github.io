@@ -4,6 +4,10 @@
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background-color: #ffffff;
@@ -12,7 +16,7 @@ body {
 }
 
 .container {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 3rem 1.5rem;
 }
@@ -20,14 +24,16 @@ body {
 .header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 4rem;
+    align-items: center;
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
 }
 
 .logo-area h1 {
     font-size: 1.75rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
     letter-spacing: -0.02em;
 }
 
@@ -45,107 +51,43 @@ body {
     text-decoration: underline;
 }
 
+.main-layout {
+    display: flex;
+    gap: 3rem;
+    align-items: flex-start;
+}
+
+.content-area {
+    flex: 1;
+    min-width: 0;
+}
+
 .section {
-    margin-bottom: 3.5rem;
+    margin-bottom: 4rem;
 }
 
 .section-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 1.25rem;
-    color: #374151;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
-}
-
-.card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 1.25rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.5rem;
-    text-decoration: none;
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
     color: #111827;
-    font-size: 0.95rem;
-    background-color: #ffffff;
-    transition: all 0.2s ease;
-}
-
-button.card {
-    cursor: pointer;
-    text-align: left;
-    font-family: inherit;
-}
-
-.card:hover {
-    border-color: #9ca3af;
-    background-color: #f9fafb;
-}
-
-.card.active {
-    border-color: #111827;
-    background-color: #f9fafb;
-    font-weight: 500;
+    letter-spacing: -0.01em;
+    scroll-margin-top: 3rem;
 }
 
 .metadata-box {
     border: 1px solid #e5e7eb;
     border-radius: 0.75rem;
-    padding: 2rem;
-}
-
-.meta-group {
-    margin-bottom: 1.75rem;
-}
-
-.meta-group:last-child {
-    margin-bottom: 0;
-}
-
-.meta-group h3 {
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #9ca3af;
-}
-
-.meta-group p {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #111827;
-    margin-bottom: 0.25rem;
-}
-
-.meta-group span {
-    font-size: 0.9rem;
-    color: #4b5563;
-}
-
-.badge {
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 0.2rem 0.5rem;
-    border-radius: 0.375rem;
-    text-transform: uppercase;
-}
-
-.badge-stable {
-    background-color: #dcfce7;
-    color: #166534;
+    padding: 2.25rem;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.02);
 }
 
 .footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 5rem;
+    margin-top: 6rem;
     padding-top: 2rem;
     border-top: 1px solid #e5e7eb;
     font-size: 0.8rem;
@@ -161,10 +103,11 @@ button.card {
 }
 
 .doc-content h3 {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 600;
-    margin: 2rem 0 1rem;
+    margin: 2.25rem 0 1rem;
     color: #111827;
+    scroll-margin-top: 3.5rem;
 }
 
 .doc-content h3:first-child {
@@ -172,26 +115,28 @@ button.card {
 }
 
 .doc-content p {
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
     color: #374151;
-    font-size: 0.95rem;
+    font-size: 0.975rem;
+    line-height: 1.6;
 }
 
 .doc-content ul, .doc-content ol {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
     padding-left: 1.5rem;
     color: #374151;
-    font-size: 0.95rem;
+    font-size: 0.975rem;
 }
 
 .doc-content li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.65rem;
+    line-height: 1.5;
 }
 
 .doc-content code {
     background-color: #f3f4f6;
-    padding: 0.15rem 0.4rem;
-    border-radius: 0.25rem;
+    padding: 0.2rem 0.45rem;
+    border-radius: 0.375rem;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-size: 0.85em;
     color: #1f2937;
@@ -213,13 +158,7 @@ button.card {
     color: inherit;
     font-size: 0.85em;
     border-radius: 0;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 4rem;
+    line-height: 1.5;
 }
 
 .lang-switcher {
@@ -249,4 +188,169 @@ button.card {
 .lang-btn.active {
     color: #111827;
     font-weight: 700;
+}
+
+.navigation-sidebar {
+    width: 260px;
+    position: sticky;
+    top: 2.5rem;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+}
+
+.sidebar-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+    margin-bottom: 1rem;
+}
+
+.sidebar-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.sidebar-links a {
+    font-size: 0.9rem;
+    color: #4b5563;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.15s ease;
+}
+
+.sidebar-links a:hover {
+    color: #111827;
+    text-decoration: underline;
+}
+
+.sidebar-sublinks {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-left: 1.25rem;
+    margin-top: 0.5rem;
+}
+
+.sidebar-sublinks a {
+    font-size: 0.825rem !important;
+    color: #6b7280 !important;
+    font-weight: 400 !important;
+}
+
+.sidebar-sublinks a:hover {
+    color: #111827 !important;
+}
+
+.sub-section-doc {
+    scroll-margin-top: 3.5rem;
+}
+
+.doc-divider {
+    border: 0;
+    border-top: 1px solid #e5e7eb;
+    margin: 2.5rem 0;
+}
+
+.anim-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.anim-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.anim-card:hover {
+    border-color: #111827;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+}
+
+.anim-card h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.anim-card p {
+    font-size: 0.875rem;
+    color: #4b5563;
+    line-height: 1.45;
+}
+
+.anim-gif {
+    background-color: #f9fafb;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+.anim-gif img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cmd-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.cmd-table th, .cmd-table td {
+    padding: 0.85rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+    line-height: 1.45;
+}
+
+.cmd-table th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    color: #374151;
+}
+
+.cmd-table tr:hover {
+    background-color: #fcfcfd;
+}
+
+.cmd-table code {
+    background-color: #f3f4f6;
+    padding: 0.15rem 0.4rem;
+    border-radius: 0.25rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.85em;
+    color: #1f2937;
+}
+
+@media (max-width: 900px) {
+    .main-layout {
+        flex-direction: column-reverse;
+    }
+    .navigation-sidebar {
+        width: 100%;
+        position: static;
+        margin-bottom: 2rem;
+    }
 }
